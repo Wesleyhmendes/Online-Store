@@ -1,4 +1,4 @@
-import SearchContainer from '../SearchContaienr/SearchContainer';
+import SearchContainer from '../SearchContainer/SearchContainer';
 
 function Header() {
   return (
