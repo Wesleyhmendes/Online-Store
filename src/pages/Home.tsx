@@ -22,10 +22,13 @@ function Home() {
       { categories.map((category) => (
         <label
           data-testid="category"
+          id={ `category-${category.id}` }
           key={ category.id }
-          htmlFor=""
+          htmlFor={ category.id }
         >
           <input
+            name="category"
+            id={ category.id }
             type="radio"
           />
           { category.name }
