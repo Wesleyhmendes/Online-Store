@@ -1,14 +1,16 @@
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
-import SearchContainer from './components/SearchContaienr/SearchContainer';
+import SearchContainer from './components/SearchContainer/SearchContainer';
+import Layout from './components/layout/Layout';
+import Home from './pages/Home';
 
 function App() {
   return (
-    <>
-      <SearchContainer />
-      <h1 className="title" data-testid="home-initial-message">
-        Digite algum termo de pesquisa ou escolha uma categoria.
-      </h1>
-    </>
+    <Routes>
+      <Route path="/" element={ <Layout /> }>
+        <Route index path="/" element={ <Home /> } />
+      </Route>
+    </Routes>
   );
 }
 
