@@ -31,7 +31,10 @@ function Home() {
           { category.name }
         </label>
       )) }
-      <h1 className="title" data-testid="home-initial-message">
+      <h1
+        className="title"
+        data-testid="home-initial-message"
+      >
         Digite algum termo de pesquisa ou escolha uma categoria.
       </h1>
     </div>
