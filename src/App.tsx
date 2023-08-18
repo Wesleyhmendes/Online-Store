@@ -15,7 +15,6 @@ import useLocalStorage from './hooks/useLocalStorage';
 function App() {
   const [search, setSearch] = useState('');
   const [products, setProducts] = useState([]);
-  const [cartItens, setCartItens] = useState([]);
   const [categories, setCategories] = useState<GetCategory[]>([]);
 
   const { readLocalStorage } = useLocalStorage();
@@ -26,6 +25,7 @@ function App() {
   });
 
   const [cart, setCart] = useState<CartType[]>(readLocalStorage('cartProducts') || []);
+  console.log(cart);
 
   const [isStart, setIsStart] = useState(true);
 
@@ -76,9 +76,19 @@ function App() {
             isStart={ isStart }
             handleCategory={ handleCategory }
             selectedCategory={ selectedCategory }
+            cart={ cart }
+            setCart={ setCart }
           /> }
         />
-        <Route path="/carrinho" element={ <Carrinho /> } />
+        <Route
+          path="/carrinho"
+          element={
+            <Carrinho
+              cart={ cart }
+              setCart={ setCart }
+            />
+      }
+        />
         <Route
           path="/details/:idProduct"
           element={ <ProductDetails

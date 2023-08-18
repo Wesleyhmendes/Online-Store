@@ -3,7 +3,11 @@ import { Link } from 'react-router-dom';
 import Category from '../../components/Category/Category';
 import Heading from '../../components/Heading/Heading';
 import Product from '../../components/Product/Product';
-import { GetCategory, ProductType, SelectedCategoryType } from '../../types/types';
+import {
+  CartType, GetCategory, ProductType,
+  SelectedCategoryType,
+} from '../../types/types';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 type HomeProps = {
   products?: ProductType[];
@@ -11,16 +15,22 @@ type HomeProps = {
   isStart: boolean;
   selectedCategory: SelectedCategoryType;
   handleCategory: (event: ChangeEvent<HTMLInputElement>) => void;
+  cart: CartType[];
+  setCart: (cart: CartType[]) => void;
 };
 
 function Home({
+
   products = [],
   categories = [],
   isStart,
   selectedCategory,
   handleCategory,
+  cart,
+  setCart,
 }: HomeProps) {
   return (
+
     <>
       {
         isStart && (
@@ -42,27 +52,33 @@ function Home({
         ))
       }
 
-      { (products.length === 0 && !isStart) && (
+      {(products.length === 0 && !isStart) && (
         <Heading>
           Nenhum produto foi encontrado
         </Heading>
-      ) }
+      )}
 
       {
         products.length > 0 && products.map((product) => (
+
           <Link
             key={ product.id }
             to={ `/details/${product.id}` }
             data-testid="product-detail-link"
           >
             <Product
+              testId="product-add-to-cart"
+              product={ product }
               key={ product.id }
-              id={ product.id }
               price={ product.price }
               thumbnail={ product.thumbnail }
               title={ product.title }
+              cart={ cart }
+              setCart={ setCart }
+
             />
           </Link>
+
         ))
       }
     </>
