@@ -14,6 +14,7 @@ const useLocalStorage = () => {
   const deleteLocalStorage = (key: string) => {
     localStorage.removeItem(key);
   };
+
   return {
     saveLocalStorage,
     readLocalStorage,
