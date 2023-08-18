@@ -29,9 +29,8 @@ function App() {
       const result = await getCategories();
       setCategories(result);
     };
-
     fetchedCategories();
-  });
+  }, []);
 
   return (
     <Routes>
