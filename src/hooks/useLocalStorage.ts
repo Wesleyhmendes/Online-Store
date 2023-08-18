@@ -5,20 +5,21 @@ const useLocalStorage = () => {
   const readLocalStorage = (key: string) => JSON.parse(
     localStorage.getItem(key) as string,
   );
+  const deleteItemLocalStorage = (key: string, id: string) => {
+    const data = readLocalStorage(key);
+    const newData = data.filter((item: any) => item.id !== id);
+    localStorage.removeItem(key);
+    saveLocalStorage(key, newData);
+  };
   const deleteLocalStorage = (key: string) => {
     localStorage.removeItem(key);
   };
-<<<<<<< HEAD
-
   return {
     saveLocalStorage,
     readLocalStorage,
     deleteLocalStorage,
     deleteItemLocalStorage,
   };
-=======
-  return { saveLocalStorage, readLocalStorage, deleteLocalStorage };
->>>>>>> parent of c6337c9 (feat: delete localStorage)
 };
 
 export default useLocalStorage;
