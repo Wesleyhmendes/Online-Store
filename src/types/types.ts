@@ -18,9 +18,7 @@ export type SelectedCategoryType = {
   isChecked: boolean,
 };
 
-export type ProductProps = {
-  id: string;
-  thumbnail: string;
-  title: string;
-  price: number;
-};
+export type CartType = {
+  quantity: number,
+  totalPrice: number,
+} & ProductType;
