@@ -1,6 +1,11 @@
+import Button from '../../components/Button/Button';
+import { useState } from 'react';
+import Product from '../../components/Product/Product';
+import useLocalStorage from './hooks/useLocalStorage';
 import { ChangeEvent, useState } from 'react';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import { CartType } from '../../types/types';
+
 
 function Carrinho() {
   const [isThereProduct, setIsthereProduct] = useState(false);

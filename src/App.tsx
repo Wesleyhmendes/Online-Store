@@ -4,21 +4,27 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import Layout from './components/layout/Layout';
 import Home from './pages/Home/Home';
 import Carrinho from './pages/Carrinho/Carrinho';
-import { GetCategory, SelectedCategoryType } from './types/types';
+import { CartType, GetCategory, SelectedCategoryType } from './types/types';
 import ProductDetails from './components/Product Details/ProductDetails';
 import {
   getCategories, getProductsByQuery,
   getProductsFromCategoryAndQuery,
 } from './services/api';
+import useLocalStorage from './hooks/useLocalStorage';
 
 function App() {
   const [search, setSearch] = useState('');
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState<GetCategory[]>([]);
+
+  const { readLocalStorage } = useLocalStorage();
+
   const [selectedCategory, setSelectedCategory] = useState<SelectedCategoryType>({
     id: '',
     isChecked: false,
   });
+
+  const [cart, setCart] = useState<CartType[]>(readLocalStorage('cartProducts') || []);
 
   const [isStart, setIsStart] = useState(true);
 
@@ -76,6 +82,8 @@ function App() {
           path="/details/:idProduct"
           element={ <ProductDetails
             products={ products }
+            cart={ cart }
+            setCart={ setCart }
           /> }
         />
       </Route>

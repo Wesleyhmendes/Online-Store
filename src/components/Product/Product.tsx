@@ -1,13 +1,10 @@
-import { Link } from 'react-router-dom';
-
 type ProductProps = {
-  id: string;
   thumbnail: string;
   title: string;
   price: number;
 };
 
-function Product({ thumbnail, title, price, id }: ProductProps) {
+function Product({ thumbnail, title, price }: ProductProps) {
   return (
     <div data-testid="product" className="productCard">
       <img data-testid="product-detail-image" src={ thumbnail } alt={ title } />
