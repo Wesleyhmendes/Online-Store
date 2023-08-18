@@ -1,4 +1,4 @@
-const URL = 'https://api.mercadolibre.com/';
+const URL = 'https://api.mercadolibre.com';
 
 export async function getCategories() {
   const api = await fetch(`${URL}/sites/MLB/categories`);

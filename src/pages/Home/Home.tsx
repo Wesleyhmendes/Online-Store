@@ -1,3 +1,4 @@
+import Input from '../../components/Input/Input';
 import { GetCategory, ProductType } from '../../types/types';
 
 type HomeProps = {
@@ -7,6 +8,8 @@ type HomeProps = {
 };
 
 function Home({ products = [], categories = [], isStart } : HomeProps) {
+  console.log(categories);
+
   return (
     <>
       <div>
@@ -14,20 +17,15 @@ function Home({ products = [], categories = [], isStart } : HomeProps) {
           <h1 className="title" data-testid="home-initial-message">
             Digite algum termo de pesquisa ou escolha uma categoria.
           </h1>)}
-        {products.length > 0 && categories.map((category) => (
-          <label
-            data-testid="category"
-            id={ `category-${category.id}` }
+        {products && categories.map((category) => (
+          <Input
+            testId="category"
             key={ category.id }
-            htmlFor={ category.id }
+            id={ `category-${category.id}` }
+            type="radio"
           >
-            <input
-              name="category"
-              id={ category.id }
-              type="radio"
-            />
-            { category.name }
-          </label>
+            {category.name}
+          </Input>
         )) }
       </div>
       {(products.length === 0 && !isStart) && (
@@ -36,7 +34,7 @@ function Home({ products = [], categories = [], isStart } : HomeProps) {
         </h1>
       )}
       { products.length > 0 && products.map((product) => (
-        <div className="productCard" key={ product.id }>
+        <div data-testid="product" className="productCard" key={ product.id }>
           <img src={ product.thumbnail } alt={ product.title } />
           <h4>{ product.title }</h4>
           <p>{ product.price }</p>
