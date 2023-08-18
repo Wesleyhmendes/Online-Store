@@ -1,4 +1,5 @@
 import { ChangeEvent } from 'react';
+import { Link } from 'react-router-dom';
 import Category from '../../components/Category/Category';
 import Heading from '../../components/Heading/Heading';
 import Product from '../../components/Product/Product';
@@ -19,8 +20,6 @@ function Home({
   selectedCategory,
   handleCategory,
 }: HomeProps) {
-  // console.log(selectedCategory);
-  // console.log(categories);
   return (
     <>
       {
@@ -51,13 +50,19 @@ function Home({
 
       {
         products.length > 0 && products.map((product) => (
-          <Product
+          <Link
             key={ product.id }
-            id={ product.id }
-            price={ product.price }
-            thumbnail={ product.thumbnail }
-            title={ product.title }
-          />
+            to={ `/details/${product.id}` }
+            data-testid="product-detail-link"
+          >
+            <Product
+              key={ product.id }
+              id={ product.id }
+              price={ product.price }
+              thumbnail={ product.thumbnail }
+              title={ product.title }
+            />
+          </Link>
         ))
       }
     </>

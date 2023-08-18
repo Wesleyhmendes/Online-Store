@@ -73,7 +73,7 @@ function App() {
         />
         <Route path="/carrinho" element={ <Carrinho /> } />
         <Route
-          path="/details/:id"
+          path="/details/:idProduct"
           element={ <ProductDetails
             products={ products }
           /> }
