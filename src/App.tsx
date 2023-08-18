@@ -29,7 +29,6 @@ function App() {
   const submitSearch = async () => {
     const fetchedProducts = await getProductsByQuery(search);
     setProducts(fetchedProducts.results);
-    // console.log(fetchedProducts);
     setIsStart(false);
   };
 
