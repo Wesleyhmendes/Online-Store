@@ -1,14 +1,21 @@
 import { useParams } from 'react-router-dom';
-import { ProductType } from '../../types/types';
+import { CartType, ProductType } from '../../types/types';
 import Product from '../Product/Product';
+import Button from '../Button/Button';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
 interface DetailsProps {
   products: ProductType[];
+  cart: CartType[];
+  setCart: (cart: CartType[]) => void;
 }
 
-function ProductDetails({ products }: DetailsProps) {
-  const { idProduct } = useParams<{ idProduct: string }>();
-  const searchedProduct = products.find((product) => product.id === idProduct);
+function ProductDetails({ products, cart, setCart }: DetailsProps) {
+  const { idProduct } = useParams<{ idProduct: string; }>();
+  const { saveLocalStorage } = useLocalStorage();
+
+  const searchedProduct = products
+    .find((product) => product.id === idProduct);
 
   if (!searchedProduct) {
     return <h3>Produto não encontrado</h3>;
@@ -17,14 +24,31 @@ function ProductDetails({ products }: DetailsProps) {
   const { title, price, thumbnail, id } = searchedProduct;
   const modifiedThumbnail = `${thumbnail.slice(0, -5)}W${thumbnail.slice(-4)}`;
 
+  const addToTheCart = () => {
+    setCart([...cart, {
+      ...searchedProduct,
+      quantity: 1,
+      totalPrice: price,
+    },
+    ]);
+    saveLocalStorage('cartProducts', cart);
+  };
+
   return (
-    <Product
-      key={ id }
-      id={ id }
-      price={ price }
-      thumbnail={ modifiedThumbnail }
-      title={ title }
-    />
+    <>
+      <Product
+        key={ id }
+        price={ price }
+        thumbnail={ modifiedThumbnail }
+        title={ title }
+      />
+      <Button
+        testId="product-detail-add-to-cart"
+        onClick={ addToTheCart }
+      >
+        Adicionar ao Carrinho
+      </Button>
+    </>
   );
 }
 

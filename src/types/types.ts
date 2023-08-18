@@ -17,3 +17,8 @@ export type SelectedCategoryType = {
   id: string,
   isChecked: boolean,
 };
+
+export type CartType = {
+  quantity: number,
+  totalPrice: number,
+};
