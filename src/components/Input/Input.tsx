@@ -8,11 +8,11 @@ type InputProps = {
 function Input({ children = null, id, testId = '', ...rest }: InputProps) {
   return (
     <label htmlFor={ id } data-testid={ testId }>
-      { children }
       <input
         { ...rest }
         id={ id }
       />
+      { children }
     </label>
   );
 }

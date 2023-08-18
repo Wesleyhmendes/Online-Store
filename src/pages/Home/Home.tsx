@@ -19,8 +19,8 @@ function Home({
   selectedCategory,
   handleCategory,
 }: HomeProps) {
-  console.log(selectedCategory);
-  console.log(categories);
+  // console.log(selectedCategory);
+  // console.log(categories);
   return (
     <>
       {
@@ -53,6 +53,7 @@ function Home({
         products.length > 0 && products.map((product) => (
           <Product
             key={ product.id }
+            id={ product.id }
             price={ product.price }
             thumbnail={ product.thumbnail }
             title={ product.title }

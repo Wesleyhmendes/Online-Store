@@ -1,4 +1,5 @@
 export type ProductType = {
+  variations_data: any;
   id: string;
   title: string;
   thumbnail: string;

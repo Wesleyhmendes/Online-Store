@@ -4,12 +4,12 @@ import { ChangeEvent, useEffect, useState } from 'react';
 import Layout from './components/layout/Layout';
 import Home from './pages/Home/Home';
 import Carrinho from './pages/Carrinho/Carrinho';
+import { GetCategory, SelectedCategoryType } from './types/types';
+import ProductDetails from './components/Product Details/ProductDetails';
 import {
-  getCategories,
-  getProductsByQuery,
+  getCategories, getProductsByQuery,
   getProductsFromCategoryAndQuery,
 } from './services/api';
-import { GetCategory, SelectedCategoryType } from './types/types';
 
 function App() {
   const [search, setSearch] = useState('');
@@ -29,6 +29,7 @@ function App() {
   const submitSearch = async () => {
     const fetchedProducts = await getProductsByQuery(search);
     setProducts(fetchedProducts.results);
+    // console.log(fetchedProducts);
     setIsStart(false);
   };
 
@@ -72,6 +73,12 @@ function App() {
           /> }
         />
         <Route path="/carrinho" element={ <Carrinho /> } />
+        <Route
+          path="/details/:id"
+          element={ <ProductDetails
+            products={ products }
+          /> }
+        />
       </Route>
     </Routes>
   );
