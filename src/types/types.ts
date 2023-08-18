@@ -11,3 +11,8 @@ export type GetCategory = {
   id: string,
   name: string,
 };
+
+export type SelectedCategoryType = {
+  id: string,
+  isChecked: boolean,
+};

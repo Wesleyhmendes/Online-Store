@@ -9,13 +9,16 @@ import {
   getProductsByQuery,
   getProductsFromCategoryAndQuery,
 } from './services/api';
-import { GetCategory } from './types/types';
+import { GetCategory, SelectedCategoryType } from './types/types';
 
 function App() {
   const [search, setSearch] = useState('');
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState<GetCategory[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<SelectedCategoryType>({
+    id: '',
+    isChecked: false,
+  });
 
   const [isStart, setIsStart] = useState(true);
 
@@ -29,9 +32,14 @@ function App() {
     setIsStart(false);
   };
 
-  const handleCategory = async (id: string) => {
+  const handleCategory = async (event: ChangeEvent<HTMLInputElement>) => {
+    const id = event.target.value;
     const fetchedProducts = await getProductsFromCategoryAndQuery(search, id);
     setProducts(fetchedProducts.results);
+    setSelectedCategory({
+      id: event.target.value,
+      isChecked: event.target.checked,
+    });
   };
 
   useEffect(() => {
@@ -60,6 +68,7 @@ function App() {
             categories={ categories }
             isStart={ isStart }
             handleCategory={ handleCategory }
+            selectedCategory={ selectedCategory }
           /> }
         />
         <Route path="/carrinho" element={ <Carrinho /> } />

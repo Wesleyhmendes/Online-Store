@@ -1,19 +1,26 @@
+import { ChangeEvent } from 'react';
 import Category from '../../components/Category/Category';
 import Heading from '../../components/Heading/Heading';
-import Input from '../../components/Input/Input';
 import Product from '../../components/Product/Product';
-import { GetCategory, ProductType } from '../../types/types';
+import { GetCategory, ProductType, SelectedCategoryType } from '../../types/types';
 
 type HomeProps = {
   products?: ProductType[];
   categories?: GetCategory[];
   isStart: boolean;
-  handleCategory: (id: string) => void;
+  selectedCategory: SelectedCategoryType;
+  handleCategory: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
-function Home({ products = [], categories = [], isStart }: HomeProps) {
+function Home({
+  products = [],
+  categories = [],
+  isStart,
+  selectedCategory,
+  handleCategory,
+}: HomeProps) {
+  console.log(selectedCategory);
   console.log(categories);
-
   return (
     <>
       {
@@ -30,6 +37,8 @@ function Home({ products = [], categories = [], isStart }: HomeProps) {
             key={ category.id }
             id={ category.id }
             name={ category.name }
+            handleCategory={ handleCategory }
+            selectedCategory={ selectedCategory }
           />
         ))
       }
