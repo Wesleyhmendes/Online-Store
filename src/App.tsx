@@ -39,7 +39,6 @@ function App() {
         path="/"
         element={ <Layout
           search={ search }
-          products={ products }
           handleSearch={ handleSearch }
           submitSearch={ submitSearch }
         /> }

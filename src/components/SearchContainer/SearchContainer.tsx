@@ -1,18 +1,14 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent } from 'react';
 import Button from '../Button/Button';
 import Input from '../Input/Input';
-import Home from '../../pages/Home/Home';
-import { getProductsByQuery } from '../../services/api';
-import { ProductType } from '../../types/types';
 
 type SearchProps = {
   search: string;
-  products: ProductType[];
   handleSearch: (event: ChangeEvent<HTMLInputElement>) => void;
   submitSearch: () => void;
 };
 
-function SearchContainer({ search, products, handleSearch, submitSearch }: SearchProps) {
+function SearchContainer({ search, handleSearch, submitSearch }: SearchProps) {
   return (
     <div className="searchContainer">
       <Input
