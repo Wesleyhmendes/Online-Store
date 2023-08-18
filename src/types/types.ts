@@ -21,4 +21,4 @@ export type SelectedCategoryType = {
 export type CartType = {
   quantity: number,
   totalPrice: number,
-};
+} & ProductType;

@@ -10,4 +10,5 @@ const useLocalStorage = () => {
   };
   return { saveLocalStorage, readLocalStorage, deleteLocalStorage };
 };
+
 export default useLocalStorage;
