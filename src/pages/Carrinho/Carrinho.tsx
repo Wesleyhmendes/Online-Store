@@ -4,7 +4,7 @@ import useLocalStorage from './hooks/useLocalStorage';
 
 function Carrinho() {
   const [isThereProduct, setIsthereProduct] = useState(false);
-  const [qunatiyProduct, setQuantityProduct] = useState<number>(0);
+  const [qunatityProduct, setQuantityProduct] = useState<number>(0);
 
   const { readLocalStorage } = useLocalStorage('cartProducts');
   const item = readLocalStorage;
@@ -12,11 +12,11 @@ function Carrinho() {
   if (item) setIsthereProduct(true);
 
   const handleQuantityMore = () => {
-    setQuantityProduct((prev) => qunatiyProduct - 1);
+    setQuantityProduct((prev) => qunatityProduct - 1);
   };
 
   const handleQuantityLess = () => {
-    setQuantityProduct((prev) => qunatiyProduct + 1);
+    setQuantityProduct((prev) => qunatityProduct + 1);
   };
 
   return (
@@ -45,13 +45,13 @@ function Carrinho() {
             <div>
               <button>❌</button>
               <Product
-                id={ readLocalStorage.id }
-                thumbnail={ readLocalStorage.thumbnail }
-                title={ readLocalStorage.title }
-                price={ readLocalStorage.price }
+                id={ item.id }
+                thumbnail={ item.thumbnail }
+                title={ item.title }
+                price={ item.price }
               />
               <button onClick={ handleQuantityMore }>+</button>
-              <p>{ qunatiyProduct }</p>
+              <p>{ qunatityProduct }</p>
               <button onClick={ handleQuantityLess }>-</button>
             </div>
           </section>
