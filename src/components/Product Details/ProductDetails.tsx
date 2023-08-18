@@ -23,10 +23,6 @@ function ProductDetails({ products, cart, setCart }: DetailsProps) {
   const { title, price, thumbnail, id } = searchedProduct;
   const modifiedThumbnail = `${thumbnail.slice(0, -5)}W${thumbnail.slice(-4)}`;
 
-  const handleClick = () => {
-    AddToTheCart(cart, setCart, searchedProduct, 'cartProducts');
-  };
-
   // const addToTheCart = () => {
   //   setCart([...cart, {
   //     ...searchedProduct,
@@ -38,20 +34,18 @@ function ProductDetails({ products, cart, setCart }: DetailsProps) {
   // };
 
   return (
-    <>
-      <Product
-        key={ id }
-        price={ price }
-        thumbnail={ modifiedThumbnail }
-        title={ title }
-      />
-      <Button
-        testId="product-detail-add-to-cart"
-        onClick={ handleClick }
-      >
-        Adicionar ao Carrinho
-      </Button>
-    </>
+
+    <Product
+      product={ searchedProduct }
+      key={ id }
+      price={ price }
+      thumbnail={ modifiedThumbnail }
+      title={ title }
+      cart={ cart }
+      setCart={ setCart }
+      testId="product-detail-add-to-cart"
+    />
+
   );
 }
 

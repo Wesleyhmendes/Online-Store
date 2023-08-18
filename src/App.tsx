@@ -25,6 +25,7 @@ function App() {
   });
 
   const [cart, setCart] = useState<CartType[]>(readLocalStorage('cartProducts') || []);
+  console.log(cart);
 
   const [isStart, setIsStart] = useState(true);
 
@@ -75,9 +76,19 @@ function App() {
             isStart={ isStart }
             handleCategory={ handleCategory }
             selectedCategory={ selectedCategory }
+            cart={ cart }
+            setCart={ setCart }
           /> }
         />
-        <Route path="/carrinho" element={ <Carrinho /> } />
+        <Route
+          path="/carrinho"
+          element={
+            <Carrinho
+              cart={ cart }
+              setCart={ setCart }
+            />
+      }
+        />
         <Route
           path="/details/:idProduct"
           element={ <ProductDetails
