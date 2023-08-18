@@ -21,4 +21,5 @@ const useLocalStorage = () => {
     deleteItemLocalStorage,
   };
 };
+
 export default useLocalStorage;
