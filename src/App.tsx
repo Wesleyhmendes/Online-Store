@@ -14,6 +14,7 @@ import {
 function App() {
   const [search, setSearch] = useState('');
   const [products, setProducts] = useState([]);
+  const [cartItens, setCartItens] = useState([]);
   const [categories, setCategories] = useState<GetCategory[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<SelectedCategoryType>({
     id: '',

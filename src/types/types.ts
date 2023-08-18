@@ -17,3 +17,10 @@ export type SelectedCategoryType = {
   id: string,
   isChecked: boolean,
 };
+
+export type ProductProps = {
+  id: string;
+  thumbnail: string;
+  title: string;
+  price: number;
+};

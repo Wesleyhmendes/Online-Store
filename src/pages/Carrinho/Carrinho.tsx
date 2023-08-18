@@ -1,9 +1,16 @@
+import CartItem from '../../components/CartItem/CartItem';
+
 function Carrinho() {
   return (
-    <h1 data-testid="shopping-cart-empty-message">
-      Seu carrinho está vazio
-      <p>teste</p>
-    </h1>
+    <>
+      <div data-testid="shopping-cart-empty-message">
+        Seu carrinho está vazio
+      </div>
+
+      <div>
+        <CartItem id={''} thumbnail={''} title={''} price={0} />
+      </div>
+    </>
   );
 }
 export default Carrinho;
