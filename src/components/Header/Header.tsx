@@ -1,15 +1,27 @@
 import { Link } from 'react-router-dom';
 import { BsCart } from 'react-icons/bs';
+import { ChangeEvent } from 'react';
 import SearchContainer from '../SearchContainer/SearchContainer';
+import Button from '../Button/Button';
 
-function Header() {
+type HeaderProps = {
+  search: string;
+  handleSearch: (event: ChangeEvent<HTMLInputElement>) => void;
+  submitSearch: () => void;
+};
+
+function Header({ search, handleSearch, submitSearch }: HeaderProps) {
   return (
     <header>
-      <SearchContainer />
+      <SearchContainer
+        search={ search }
+        handleSearch={ handleSearch }
+        submitSearch={ submitSearch }
+      />
       <Link to="/carrinho" data-testid="shopping-cart-button">
-        <button>
+        <Button>
           <BsCart />
-        </button>
+        </Button>
       </Link>
     </header>
   );
