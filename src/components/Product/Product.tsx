@@ -2,6 +2,7 @@ import { CartType, ProductType } from '../../types/types';
 import { AddToCartButton } from '../AddToCartButton/AddToCartButton';
 
 type ProductProps = {
+  id: string;
   thumbnail: string;
   title: string;
   price: number;
