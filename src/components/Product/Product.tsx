@@ -19,12 +19,6 @@ function Product(
       <img data-testid="product-detail-image" src={ thumbnail } alt={ title } />
       <h4 data-testid="product-detail-name">{title}</h4>
       <p data-testid="product-detail-price">{price}</p>
-      <AddToCartButton
-        testId={ testId }
-        product={ product }
-        cart={ cart }
-        setCart={ setCart }
-      />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { CartType } from '../../types/types';
 import useLocalStorage from '../../hooks/useLocalStorage';
 
@@ -6,44 +6,54 @@ import useLocalStorage from '../../hooks/useLocalStorage';
    cart: CartType[];
    setCart: (cart: CartType[]) => void;
  };
-function Carrinho({ cart, setCart }: CarrinhoProps) {
-  const [isThereProduct, setIsthereProduct] = useState(false);
-  const [quantityProduct, setQuantityProduct] = useState<number>(0);
 
-  const {
-    readLocalStorage, deleteLocalStorage,
-    saveLocalStorage, deleteItemLocalStorage } = useLocalStorage();
+function Carrinho({ cart, setCart }: CarrinhoProps) {
+  const { readLocalStorage } = useLocalStorage();
   const itens: CartType[] = readLocalStorage('cartProducts');
   console.log(itens);
-  // if (itens.length > 0) setIsthereProduct(true);
+  console.log(cart);
+  const { saveLocalStorage } = useLocalStorage();
 
-  // const handleQuantityMore = () => {
-  //   setQuantityProduct((prev) => quantityProduct - 1);
-  // };
-
-  // const handleQuantityLess = () => {
-  //   setQuantityProduct((prev) => quantityProduct + 1);
-  // };
-  const handleQuantityMore = (id) => {
-    const getProduct = cart.find((product) => product.id === id);
-    setQuantityProduct((prev) => prev - 1);
+  const handleQuantityMore = (item: CartType) => {
+    const updatedCart = cart.map((product) => (
+      product.id === item.id
+        ? { ...product,
+          quantity: product.quantity + 1,
+          totalPrice: product.totalPrice + product.price }
+        : product
+    ));
+    setCart(
+      updatedCart,
+    );
+    saveLocalStorage('cartProducts', updatedCart);
   };
 
-  const handleQuantityLess = () => {
-    setQuantityProduct((prev) => prev + 1);
+  const handleQuantityLess = (item: CartType) => {
+    const updatedCart = cart.map((product) => (
+      product.id === item.id
+        ? {
+          ...product,
+          quantity: product.quantity === 1 ? 1 : product.quantity - 1,
+          totalPrice: product.totalPrice + product.price,
+        }
+        : product
+    ));
+    setCart(
+      updatedCart,
+    );
+    saveLocalStorage('cartProducts', updatedCart);
   };
 
   const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
     const { id } = event.currentTarget;
-    deleteItemLocalStorage('cartProducts', id);
-    // const newItensList = itens.filter((item) => item.id !== id);
-    // deleteLocalStorage('cartProducts');
-    // saveLocalStorage('cartProducts', newItensList);
+    const updatedCart = cart.filter((product) => product.id !== id);
+    setCart(updatedCart);
+    saveLocalStorage('cartProducts', updatedCart);
   };
   return (
     <>
       {
-        itens.length === 0 && (
+        !cart.length && (
           <h1 data-testid="shopping-cart-empty-message">
             Seu carrinho está vazio
           </h1>
@@ -51,29 +61,19 @@ function Carrinho({ cart, setCart }: CarrinhoProps) {
       }
 
       <section>
-        <label htmlFor="voltar">
-          <button>
-            <img
-              src="src/utils/goBack.png"
-              alt="voltar"
-              style={
+        <Link to="/">
+          <img
+            src="src/utils/goBack.png"
+            alt="voltar"
+            style={
                 { width: 10 }
               }
-            />
-          </button>
-          { ' ' }
+          />
           Voltar
-        </label>
+        </Link>
         <h2>Carrinho de Compras</h2>
-        { itens.map((item) => (
+        { cart.map((item) => (
           <div key={ item.id }>
-            <h4 data-testid="shopping-cart-product-name">
-              {item.title}
-
-            </h4>
-            <p data-testid="shopping-cart-product-quantity">
-              { item.quantity }
-            </p>
             <button
               id={ item.id }
               data-testid="remove-product"
@@ -83,19 +83,21 @@ function Carrinho({ cart, setCart }: CarrinhoProps) {
             </button>
             <div>
               <img src={ item.thumbnail } alt={ item.title } />
-              <h4>{ item.title }</h4>
+              <h4 data-testid="shopping-cart-product-name">{ item.title }</h4>
               <p>{ item.price }</p>
             </div>
             <button
               data-testid="product-increase-quantity"
-              onClick={ () => handleQuantityMore(item.id) }
+              onClick={ () => handleQuantityMore(item) }
             >
               +
             </button>
-            <p data-testid="shopping-cart-product-quantity">{ quantityProduct }</p>
+            <p data-testid="shopping-cart-product-quantity">
+              { item.quantity }
+            </p>
             <button
               data-testid="product-decrease-quantity"
-              onClick={ handleQuantityLess }
+              onClick={ () => handleQuantityLess(item) }
             >
               -
             </button>
