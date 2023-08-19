@@ -17,7 +17,7 @@ function App() {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState<GetCategory[]>([]);
 
-  const { readLocalStorage } = useLocalStorage();
+  const { readLocalStorage, saveLocalStorage } = useLocalStorage();
 
   const [selectedCategory, setSelectedCategory] = useState<SelectedCategoryType>({
     id: '',
@@ -25,7 +25,11 @@ function App() {
   });
 
   const [cart, setCart] = useState<CartType[]>(readLocalStorage('cartProducts') || []);
-  console.log(cart);
+
+  useEffect(() => {
+    saveLocalStorage('cartProducts', cart);
+    setCart(readLocalStorage('cartProducts'));
+  }, []);
 
   const [isStart, setIsStart] = useState(true);
 
@@ -82,12 +86,10 @@ function App() {
         />
         <Route
           path="/carrinho"
-          element={
-            <Carrinho
-              cart={ cart }
-              setCart={ setCart }
-            />
-      }
+          element={ <Carrinho
+            cart={ cart }
+            setCart={ setCart }
+          /> }
         />
         <Route
           path="/details/:idProduct"

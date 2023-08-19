@@ -8,9 +8,10 @@ import {
   SelectedCategoryType,
 } from '../../types/types';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import { AddToCartButton } from '../../components/AddToCartButton/AddToCartButton';
 
 type HomeProps = {
-  products?: ProductType[];
+  products: CartType[];
   categories?: GetCategory[];
   isStart: boolean;
   selectedCategory: SelectedCategoryType;
@@ -60,24 +61,30 @@ function Home({
 
       {
         products.length > 0 && products.map((product) => (
-
-          <Link
-            key={ product.id }
-            to={ `/details/${product.id}` }
-            data-testid="product-detail-link"
-          >
-            <Product
-              testId="product-add-to-cart"
-              product={ product }
+          <>
+            <Link
               key={ product.id }
-              price={ product.price }
-              thumbnail={ product.thumbnail }
-              title={ product.title }
+              to={ `/details/${product.id}` }
+              data-testid="product-detail-link"
+            >
+              <Product
+                testId="proctAAA"
+                product={ product }
+                key={ product.id }
+                price={ product.price }
+                thumbnail={ product.thumbnail }
+                title={ product.title }
+                cart={ cart }
+                setCart={ setCart }
+              />
+            </Link>
+            <AddToCartButton
               cart={ cart }
               setCart={ setCart }
-
+              product={ product }
+              testId="product-add-to-cart"
             />
-          </Link>
+          </>
 
         ))
       }

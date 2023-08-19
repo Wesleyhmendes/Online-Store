@@ -1,11 +1,9 @@
 import { useParams } from 'react-router-dom';
-import { CartType, ProductType } from '../../types/types';
+import { CartType } from '../../types/types';
 import Product from '../Product/Product';
-import Button from '../Button/Button';
-import AddToTheCart from '../../utils/addToTheCard';
 
 interface DetailsProps {
-  products: ProductType[];
+  products: CartType[];
   cart: CartType[];
   setCart: (cart: CartType[]) => void;
 }
