@@ -1,27 +1,29 @@
-import Button from '../../components/Button/Button';
-import { useState } from 'react';
-import Product from '../../components/Product/Product';
-import useLocalStorage from './hooks/useLocalStorage';
 import { ChangeEvent, useState } from 'react';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import Button from '../../components/Button/Button';
+import Product from '../../components/Product/Product';
 import { CartType } from '../../types/types';
-
 
 function Carrinho() {
   const [isThereProduct, setIsthereProduct] = useState(false);
-  const [quantityProduct, setQuantityProduct] = useState<number>(0);
 
   const { readLocalStorage, deleteLocalStorage, saveLocalStorage } = useLocalStorage();
   const itens: CartType[] = readLocalStorage('cartProducts');
 
   if (itens.length > 0) setIsthereProduct(true);
 
-  const handleQuantityMore = () => {
-    setQuantityProduct((prev) => quantityProduct - 1);
+  const handleQuantityMore = (item: CartType) => {
+    return {
+      ...item,
+      quantity: item.quantity + 1,
+    };
   };
 
-  const handleQuantityLess = () => {
-    setQuantityProduct((prev) => quantityProduct + 1);
+  const handleQuantityLess = (item: CartType) => {
+    return {
+      ...item,
+      quantity: item.quantity - 1,
+    };
   };
 
   const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -69,14 +71,14 @@ function Carrinho() {
                 </div>
                 <button
                   data-testid="product-increase-quantity"
-                  onClick={ handleQuantityMore }
+                  onClick={ () => handleQuantityMore(item) }
                 >
                   +
                 </button>
-                <p data-testid="shopping-cart-product-quantity">{ quantityProduct }</p>
+                <p data-testid="shopping-cart-product-quantity">{ item.quantity }</p>
                 <button
+                  onClick={ () => handleQuantityLess(item) }
                   data-testid="product-decrease-quantity"
-                  onClick={ handleQuantityLess }
                 >
                   -
                 </button>

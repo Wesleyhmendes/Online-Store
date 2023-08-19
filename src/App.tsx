@@ -6,11 +6,12 @@ import Home from './pages/Home/Home';
 import Carrinho from './pages/Carrinho/Carrinho';
 import { CartType, GetCategory, SelectedCategoryType } from './types/types';
 import ProductDetails from './components/Product Details/ProductDetails';
+import useLocalStorage from './hooks/useLocalStorage';
+import Checkout from './pages/Checkout/Checkout';
 import {
   getCategories, getProductsByQuery,
   getProductsFromCategoryAndQuery,
 } from './services/api';
-import useLocalStorage from './hooks/useLocalStorage';
 
 function App() {
   const [search, setSearch] = useState('');
@@ -78,6 +79,7 @@ function App() {
           /> }
         />
         <Route path="/carrinho" element={ <Carrinho /> } />
+        <Route path="/checkout" element={ <Checkout /> } />
         <Route
           path="/details/:idProduct"
           element={ <ProductDetails
