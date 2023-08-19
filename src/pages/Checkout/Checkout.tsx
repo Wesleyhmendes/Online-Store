@@ -1,9 +1,13 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+// import useLocalStorage from '../../hooks/useLocalStorage';
+import { CartProps, CartType } from '../../types/types';
 
-function Checkout() {
-  const [selectedOption, setSelectedOption] = useState('');
+function Checkout({ cart, setCart }: CartProps) {
+  // const [selectedOption, setSelectedOption] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState(false);
   const [validateForm, setValidateForm] = useState(false);
+  // const { saveLocalStorage } = useLocalStorage();
   const [keepInfo, setKeepInfo] = useState({
     name: '',
     email: '',
@@ -17,11 +21,15 @@ function Checkout() {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
-    setSelectedOption(value);
+    // setSelectedOption(value);
     setKeepInfo((prevInfo) => ({
       ...prevInfo,
       [name]: value,
     }));
+  };
+
+  const handleSelect = () => {
+    setPaymentMethod(true);
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -34,127 +42,138 @@ function Checkout() {
       && keepInfo.telefone
       && keepInfo.cep
       && keepInfo.endereço
+      && paymentMethod
     ) {
+      // Limpa o carrinho
+      const updatedCart: CartType[] = [];
+      setCart(updatedCart);
+      localStorage.clear();
+
+      // Leva de volta à página inicial
       navigate('/');
-      // Remover os produtos do local Storage
-    } else {
-      setValidateForm(true);
     }
+    setValidateForm(true);
   };
 
   return (
-    // Adicionar as informações do produto (pelo menos o nome).
-    <section>
-      <form onSubmit={ (event) => handleSubmit(event) }>
-        <label data-testid="checkout-fullname" htmlFor="">
-          Nome completo:
-          <input
-            onChange={ (event) => handleChange(event) }
-            name="name"
-            id="name"
-            type="text"
-          />
-        </label>
-        <label data-testid="checkout-email" htmlFor="">
-          E-mail:
-          <input
-            onChange={ (event) => handleChange(event) }
-            name="email"
-            id="email"
-            data-testid="checkout-cpf"
-            type="text"
-          />
-        </label>
-        <label data-testid="checkout-cpf" htmlFor="">
-          CPF:
-          <input
-            onChange={ (event) => handleChange(event) }
-            name="cpf"
-            id="cpf"
-            data-testid="checkout-cep"
-            type="text"
-          />
-        </label>
-        <label data-testid="checkout-phone" htmlFor="">
-          Telefone:
-          <input
-            onChange={ (event) => handleChange(event) }
-            name="telefone"
-            id="telefone"
-            type="text"
-          />
-        </label>
-        <label data-testid="checkout-cep" htmlFor="cep">
-          CEP:
-          <input
-            onChange={ (event) => handleChange(event) }
-            name="cep"
-            id="cep"
-            type="text"
-          />
-        </label>
-        <label data-testid="checkout-address" htmlFor="Endereço">
-          Endereço:
-          <input
-            onChange={ (event) => handleChange(event) }
-            name="endereço"
-            id="Endereço"
-            type="text"
-          />
-        </label>
-        <fieldset>
-          <legend>Método de pagamento:</legend>
+    <>
+      { cart.map((item) => (
+        <div key={ item.id }>
           <div>
+            <img src={ item.thumbnail } alt={ item.title } />
+            <h4>{ item.title }</h4>
+            <p>{ item.price }</p>
+          </div>
+          <p>
+            { item.quantity }
+          </p>
+        </div>
+      )) }
+      <section>
+        <form onSubmit={ (event) => handleSubmit(event) }>
+          <label data-testid="checkout-fullname" htmlFor="">
+            Nome completo:
             <input
               onChange={ (event) => handleChange(event) }
-              data-testid="ticket-payment"
-              type="radio"
-              id="Boleto"
-              value="Boleto"
-              checked={ selectedOption === 'Boleto' }
+              name="name"
+              id="name"
+              type="text"
+              required
             />
-            <label htmlFor="Boleto">Boleto</label>
-          </div>
-          <div>
+          </label>
+          <label data-testid="checkout-email" htmlFor="">
+            E-mail:
             <input
               onChange={ (event) => handleChange(event) }
-              data-testid="visa-payment"
-              type="radio"
-              id="Visa"
-              value="Visa"
-              checked={ selectedOption === 'Visa' }
+              name="email"
+              id="email"
+              type="text"
+              required
             />
-            <label htmlFor="Visa">Visa</label>
-          </div>
-          <div>
+          </label>
+          <label data-testid="checkout-cpf" htmlFor="">
+            CPF:
             <input
               onChange={ (event) => handleChange(event) }
-              data-testid="master-payment"
-              type="radio"
-              id="MasterCard"
-              value="MasterCard"
-              checked={ selectedOption === 'MasterCard' }
+              name="cpf"
+              id="cpf"
+              type="text"
+              required
             />
-            <label htmlFor="MasterCard">MasterCard</label>
-          </div>
-          <div>
+          </label>
+          <label data-testid="checkout-phone" htmlFor="">
+            Telefone:
             <input
               onChange={ (event) => handleChange(event) }
-              data-testid="elo-payment"
-              type="radio"
-              id="Elo"
-              value="Elo"
-              checked={ selectedOption === 'Elo' }
+              name="telefone"
+              id="telefone"
+              type="text"
+              required
             />
-            <label htmlFor="Elo">Elo</label>
-          </div>
-        </fieldset>
-        <button data-testid="checkout-btn">Finalizar Compra</button>
-      </form>
-      { validateForm && (
-        <h2>Campos inválidos</h2>
-      ) }
-    </section>
+          </label>
+          <label data-testid="checkout-cep" htmlFor="cep">
+            CEP:
+            <input
+              onChange={ (event) => handleChange(event) }
+              name="cep"
+              id="cep"
+              type="text"
+              required
+            />
+          </label>
+          <label data-testid="checkout-address" htmlFor="Endereço">
+            Endereço:
+            <input
+              onChange={ (event) => handleChange(event) }
+              name="endereço"
+              id="Endereço"
+              type="text"
+              required
+            />
+          </label>
+          <input
+            name="paymentMethod"
+            onChange={ handleSelect }
+            data-testid="ticket-payment"
+            type="radio"
+            id="Boleto"
+            value="Boleto"
+          />
+          <label htmlFor="Boleto">Boleto</label>
+          <input
+            name="paymentMethod"
+            onChange={ handleSelect }
+            data-testid="visa-payment"
+            type="radio"
+            id="Visa"
+            value="Visa"
+          />
+          <label htmlFor="Visa">Visa</label>
+          <input
+            name="paymentMethod"
+            onChange={ handleSelect }
+            data-testid="master-payment"
+            type="radio"
+            id="MasterCard"
+            value="MasterCard"
+          />
+          <label htmlFor="MasterCard">MasterCard</label>
+          <input
+            name="paymentMethod"
+            onChange={ handleSelect }
+            data-testid="elo-payment"
+            type="radio"
+            id="Elo"
+            value="Elo"
+          />
+          <label htmlFor="Elo">Elo</label>
+          <button data-testid="checkout-btn">Finalizar Compra</button>
+        </form>
+        { validateForm && (
+          <h2 data-testid="error-msg">Campos inválidos</h2>
+        ) }
+      </section>
+    </>
   );
 }
 

@@ -4,10 +4,9 @@ import Category from '../../components/Category/Category';
 import Heading from '../../components/Heading/Heading';
 import Product from '../../components/Product/Product';
 import {
-  CartType, GetCategory, ProductType,
+  CartType, GetCategory,
   SelectedCategoryType,
 } from '../../types/types';
-import useLocalStorage from '../../hooks/useLocalStorage';
 import { AddToCartButton } from '../../components/AddToCartButton/AddToCartButton';
 
 type HomeProps = {
@@ -68,7 +67,6 @@ function Home({
               data-testid="product-detail-link"
             >
               <Product
-                testId="proctAAA"
                 product={ product }
                 key={ product.id }
                 price={ product.price }

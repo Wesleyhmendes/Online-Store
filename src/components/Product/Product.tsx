@@ -1,19 +1,7 @@
-import { CartType, ProductType } from '../../types/types';
-import { AddToCartButton } from '../AddToCartButton/AddToCartButton';
-
-type ProductProps = {
-  id: string;
-  thumbnail: string;
-  title: string;
-  price: number;
-  product: ProductType;
-  cart: CartType[];
-  setCart: (cart: CartType[]) => void;
-  testId:string;
-};
+import { ProductProps } from '../../types/types';
 
 function Product(
-  { thumbnail, title, price, product, cart, setCart, testId }: ProductProps,
+  { thumbnail, title, price/* , product, cart,  setCart */ }: ProductProps,
 ) {
   return (
     <div data-testid="product" className="productCard">

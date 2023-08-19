@@ -5,15 +5,15 @@ const useLocalStorage = () => {
   const readLocalStorage = (key: string) => JSON.parse(
     localStorage.getItem(key) as string,
   );
-  const deleteItemLocalStorage = (key: string, id: string) => {
-    const data = readLocalStorage(key);
-    const newData = data.filter((item: any) => item.id !== id);
-    saveLocalStorage(key, newData);
-  };
+  // const deleteItemLocalStorage = (key: string, id: string) => {
+  //   const data = readLocalStorage(key);
+  //   const newData = data.filter((item: any) => item.id !== id);
+  //   saveLocalStorage(key, newData);
+  // };
   return {
     saveLocalStorage,
     readLocalStorage,
-    deleteItemLocalStorage,
+    // deleteItemLocalStorage,
   };
 };
 

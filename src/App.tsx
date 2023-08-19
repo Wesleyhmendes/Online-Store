@@ -3,7 +3,7 @@ import './App.css';
 import { ChangeEvent, useEffect, useState } from 'react';
 import Layout from './components/layout/Layout';
 import Home from './pages/Home/Home';
-import Carrinho from './pages/Carrinho/Carrinho';
+import Cart from './pages/Cart/Cart';
 import { CartType, GetCategory, SelectedCategoryType } from './types/types';
 import ProductDetails from './components/Product Details/ProductDetails';
 import useLocalStorage from './hooks/useLocalStorage';
@@ -87,12 +87,18 @@ function App() {
         />
         <Route
           path="/carrinho"
-          element={ <Carrinho
+          element={ <Cart
             cart={ cart }
             setCart={ setCart }
           /> }
         />
-        <Route path="/checkout" element={ <Checkout /> } />
+        <Route
+          path="/checkout"
+          element={ <Checkout
+            cart={ cart }
+            setCart={ setCart }
+          /> }
+        />
         <Route
           path="/details/:idProduct"
           element={ <ProductDetails

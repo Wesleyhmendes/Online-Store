@@ -1,28 +1,26 @@
-import { ChangeEvent, useState } from 'react';
+// import { ChangeEvent, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import useLocalStorage from '../../hooks/useLocalStorage';
-import Button from '../../components/Button/Button';
-import Product from '../../components/Product/Product';
-import { Link } from 'react-router-dom';
-import { CartType } from '../../types/types';
+// import Button from '../../components/Button/Button';
+// import Product from '../../components/Product/Product';
+import { CartType, CartProps } from '../../types/types';
 
-function Carrinho({ cart, setCart }: CarrinhoProps) {
-  const { readLocalStorage } = useLocalStorage();
-  const itens: CartType[] = readLocalStorage('cartProducts');
-  console.log(itens);
-  console.log(cart);
+function Cart({ cart, setCart }: CartProps) {
   const { saveLocalStorage } = useLocalStorage();
+  // const itens: CartType[] = readLocalStorage('cartProducts');
+  const navigate = useNavigate();
 
   const handleQuantityMore = (item: CartType) => {
     const updatedCart = cart.map((product) => (
       product.id === item.id
-        ? { ...product,
-          quantity: product.quantity + 1,
-          totalPrice: product.totalPrice + product.price }
+        ? {
+          ...product,
+          quantity: (product as CartType).quantity + 1,
+          totalPrice: (product as CartType).totalPrice + product.price,
+        }
         : product
     ));
-    setCart(
-      updatedCart,
-    );
+    setCart(updatedCart);
     saveLocalStorage('cartProducts', updatedCart);
   };
 
@@ -48,6 +46,10 @@ function Carrinho({ cart, setCart }: CarrinhoProps) {
     setCart(updatedCart);
     saveLocalStorage('cartProducts', updatedCart);
   };
+
+  const handleSubmit = () => {
+    navigate('/checkout');
+  };
   return (
     <>
       {
@@ -63,8 +65,8 @@ function Carrinho({ cart, setCart }: CarrinhoProps) {
             src="src/utils/goBack.png"
             alt="voltar"
             style={
-                { width: 10 }
-              }
+              { width: 10 }
+            }
           />
           Voltar
         </Link>
@@ -101,7 +103,13 @@ function Carrinho({ cart, setCart }: CarrinhoProps) {
           </div>
         )) }
       </section>
+      <button
+        data-testid="checkout-products"
+        onClick={ handleSubmit }
+      >
+        Finalizar Compra
+      </button>
     </>
   );
 }
-export default Carrinho;
+export default Cart;
