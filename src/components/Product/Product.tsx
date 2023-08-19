@@ -1,5 +1,5 @@
 type ProductProps = {
-  id?: string;
+  id: string;
   thumbnail: string;
   title: string;
   price: number;
