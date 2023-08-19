@@ -2,91 +2,105 @@ import { ChangeEvent, useState } from 'react';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import Button from '../../components/Button/Button';
 import Product from '../../components/Product/Product';
+import { Link } from 'react-router-dom';
 import { CartType } from '../../types/types';
 
-function Carrinho() {
-  const [isThereProduct, setIsthereProduct] = useState(false);
-
-  const { readLocalStorage, deleteLocalStorage, saveLocalStorage } = useLocalStorage();
+function Carrinho({ cart, setCart }: CarrinhoProps) {
+  const { readLocalStorage } = useLocalStorage();
   const itens: CartType[] = readLocalStorage('cartProducts');
-
-  if (itens.length > 0) setIsthereProduct(true);
+  console.log(itens);
+  console.log(cart);
+  const { saveLocalStorage } = useLocalStorage();
 
   const handleQuantityMore = (item: CartType) => {
-    return {
-      ...item,
-      quantity: item.quantity + 1,
-    };
+    const updatedCart = cart.map((product) => (
+      product.id === item.id
+        ? { ...product,
+          quantity: product.quantity + 1,
+          totalPrice: product.totalPrice + product.price }
+        : product
+    ));
+    setCart(
+      updatedCart,
+    );
+    saveLocalStorage('cartProducts', updatedCart);
   };
 
   const handleQuantityLess = (item: CartType) => {
-    return {
-      ...item,
-      quantity: item.quantity - 1,
-    };
+    const updatedCart = cart.map((product) => (
+      product.id === item.id
+        ? {
+          ...product,
+          quantity: product.quantity === 1 ? 1 : product.quantity - 1,
+          totalPrice: product.totalPrice + product.price,
+        }
+        : product
+    ));
+    setCart(
+      updatedCart,
+    );
+    saveLocalStorage('cartProducts', updatedCart);
   };
 
   const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
     const { id } = event.currentTarget;
-    const newItensList = itens.filter((item) => item.id !== id);
-    deleteLocalStorage('cartProducts');
-    saveLocalStorage('cartProducts', newItensList);
+    const updatedCart = cart.filter((product) => product.id !== id);
+    setCart(updatedCart);
+    saveLocalStorage('cartProducts', updatedCart);
   };
   return (
     <>
       {
-        !isThereProduct && (
+        !cart.length && (
           <h1 data-testid="shopping-cart-empty-message">
             Seu carrinho está vazio
           </h1>
         )
       }
-      {
-        isThereProduct && (
-          <section>
-            <label htmlFor="voltar">
-              <button>
-                <img
-                  src="src/utils/goBack.png"
-                  alt="voltar"
-                />
-              </button>
-              { ' ' }
-              Voltar
-            </label>
-            <h2>Carrinho de Compras</h2>
-            { itens.map((item) => (
-              <div key={ item.id }>
-                <button
-                  id={ item.id }
-                  data-testid="remove-product"
-                  onClick={ (event) => handleRemove(event) }
-                >
-                  ❌
-                </button>
-                <div>
-                  <img src={ item.thumbnail } alt={ item.title } />
-                  <h4>{ item.title }</h4>
-                  <p>{ item.price }</p>
-                </div>
-                <button
-                  data-testid="product-increase-quantity"
-                  onClick={ () => handleQuantityMore(item) }
-                >
-                  +
-                </button>
-                <p data-testid="shopping-cart-product-quantity">{ item.quantity }</p>
-                <button
-                  onClick={ () => handleQuantityLess(item) }
-                  data-testid="product-decrease-quantity"
-                >
-                  -
-                </button>
-              </div>
-            )) }
-          </section>
-        )
-      }
+      <section>
+        <Link to="/">
+          <img
+            src="src/utils/goBack.png"
+            alt="voltar"
+            style={
+                { width: 10 }
+              }
+          />
+          Voltar
+        </Link>
+        <h2>Carrinho de Compras</h2>
+        { cart.map((item) => (
+          <div key={ item.id }>
+            <button
+              id={ item.id }
+              data-testid="remove-product"
+              onClick={ (event) => handleRemove(event) }
+            >
+              ❌
+            </button>
+            <div>
+              <img src={ item.thumbnail } alt={ item.title } />
+              <h4 data-testid="shopping-cart-product-name">{ item.title }</h4>
+              <p>{ item.price }</p>
+            </div>
+            <button
+              data-testid="product-increase-quantity"
+              onClick={ () => handleQuantityMore(item) }
+            >
+              +
+            </button>
+            <p data-testid="shopping-cart-product-quantity">
+              { item.quantity }
+            </p>
+            <button
+              data-testid="product-decrease-quantity"
+              onClick={ () => handleQuantityLess(item) }
+            >
+              -
+            </button>
+          </div>
+        )) }
+      </section>
     </>
   );
 }

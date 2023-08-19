@@ -1,23 +1,24 @@
 import useLocalStorage from '../hooks/useLocalStorage';
-import { CartType, ProductType } from '../types/types';
+import { CartType } from '../types/types';
 
 const AddToTheCart = (
   state: CartType[],
   setState: (state: CartType[]) => void,
-  searchedProduct: ProductType | undefined,
+  product: CartType | undefined,
   key: string,
 ) => {
   const { saveLocalStorage } = useLocalStorage();
-  if (searchedProduct) {
+  if (product) {
+    const cartItem = {
+      ...product,
+      quantity: Number.isNaN(product) ? product.quantity + 1 : 1,
+      totalPrice: product.price,
+    };
     setState([
       ...state,
-      {
-        ...searchedProduct,
-        quantity: 1,
-        totalPrice: searchedProduct.price,
-      },
+      cartItem,
     ]);
-    saveLocalStorage(key, state);
+    saveLocalStorage(key, [...state, cartItem]);
   }
 };
 

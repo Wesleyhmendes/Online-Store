@@ -5,10 +5,16 @@ const useLocalStorage = () => {
   const readLocalStorage = (key: string) => JSON.parse(
     localStorage.getItem(key) as string,
   );
-  const deleteLocalStorage = (key: string) => {
-    localStorage.removeItem(key);
+  const deleteItemLocalStorage = (key: string, id: string) => {
+    const data = readLocalStorage(key);
+    const newData = data.filter((item: any) => item.id !== id);
+    saveLocalStorage(key, newData);
   };
-  return { saveLocalStorage, readLocalStorage, deleteLocalStorage };
+  return {
+    saveLocalStorage,
+    readLocalStorage,
+    deleteItemLocalStorage,
+  };
 };
 
 export default useLocalStorage;
