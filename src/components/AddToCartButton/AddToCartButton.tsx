@@ -23,7 +23,7 @@ export function AddToCartButton({ cart, setCart, product, testId }: CartButtonPr
   return (
     <Button
       testId={ testId }
-      onClick={ () => handleClick }
+      onClick={ () => handleClick() }
     >
       Adicionar ao Carrinho
     </Button>
