@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import useLocalStorage from '../../hooks/useLocalStorage';
 import { CartType } from '../../types/types';
+import Button from '../../components/Button/Button';
 
 type CarrinhoProps = {
   cart: CartType[];
@@ -71,6 +72,9 @@ function Carrinho({ cart, setCart }: CarrinhoProps) {
           Voltar
         </Link>
         <h2>Carrinho de Compras</h2>
+        <Link to="/checkout" data-testid="checkout-products">
+          <Button>Finalizar Compras</Button>
+        </Link>
         { cart.map((item) => (
           <div key={ item.id }>
             <button

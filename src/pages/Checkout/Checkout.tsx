@@ -1,7 +1,13 @@
 import React, { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CartType } from '../../types/types';
+import CartContainer from '../../components/CartContainer/CartContainer';
 
-function Checkout() {
+type CheckoutProps = {
+  cart: CartType[];
+};
+
+function Checkout({ cart }: CheckoutProps) {
   const [selectedOption, setSelectedOption] = useState('');
   const [validateForm, setValidateForm] = useState(false);
   const [keepInfo, setKeepInfo] = useState({
@@ -43,118 +49,120 @@ function Checkout() {
   };
 
   return (
-    // Adicionar as informações do produto (pelo menos o nome).
-    <section>
-      <form onSubmit={ (event) => handleSubmit(event) }>
-        <label data-testid="checkout-fullname" htmlFor="">
-          Nome completo:
-          <input
-            onChange={ (event) => handleChange(event) }
-            name="name"
-            id="name"
-            type="text"
-          />
-        </label>
-        <label data-testid="checkout-email" htmlFor="">
-          E-mail:
-          <input
-            onChange={ (event) => handleChange(event) }
-            name="email"
-            id="email"
-            data-testid="checkout-cpf"
-            type="text"
-          />
-        </label>
-        <label data-testid="checkout-cpf" htmlFor="">
-          CPF:
-          <input
-            onChange={ (event) => handleChange(event) }
-            name="cpf"
-            id="cpf"
-            data-testid="checkout-cep"
-            type="text"
-          />
-        </label>
-        <label data-testid="checkout-phone" htmlFor="">
-          Telefone:
-          <input
-            onChange={ (event) => handleChange(event) }
-            name="telefone"
-            id="telefone"
-            type="text"
-          />
-        </label>
-        <label data-testid="checkout-cep" htmlFor="cep">
-          CEP:
-          <input
-            onChange={ (event) => handleChange(event) }
-            name="cep"
-            id="cep"
-            type="text"
-          />
-        </label>
-        <label data-testid="checkout-address" htmlFor="Endereço">
-          Endereço:
-          <input
-            onChange={ (event) => handleChange(event) }
-            name="endereço"
-            id="Endereço"
-            type="text"
-          />
-        </label>
-        <fieldset>
-          <legend>Método de pagamento:</legend>
-          <div>
+    <>
+      <CartContainer cart={ cart } />
+      <section>
+        <form onSubmit={ (event) => handleSubmit(event) }>
+          <label data-testid="checkout-fullname" htmlFor="">
+            Nome completo:
             <input
               onChange={ (event) => handleChange(event) }
-              data-testid="ticket-payment"
-              type="radio"
-              id="Boleto"
-              value="Boleto"
-              checked={ selectedOption === 'Boleto' }
+              name="name"
+              id="name"
+              type="text"
             />
-            <label htmlFor="Boleto">Boleto</label>
-          </div>
-          <div>
+          </label>
+          <label data-testid="checkout-email" htmlFor="">
+            E-mail:
             <input
               onChange={ (event) => handleChange(event) }
-              data-testid="visa-payment"
-              type="radio"
-              id="Visa"
-              value="Visa"
-              checked={ selectedOption === 'Visa' }
+              name="email"
+              id="email"
+              data-testid="checkout-cpf"
+              type="text"
             />
-            <label htmlFor="Visa">Visa</label>
-          </div>
-          <div>
+          </label>
+          <label data-testid="checkout-cpf" htmlFor="">
+            CPF:
             <input
               onChange={ (event) => handleChange(event) }
-              data-testid="master-payment"
-              type="radio"
-              id="MasterCard"
-              value="MasterCard"
-              checked={ selectedOption === 'MasterCard' }
+              name="cpf"
+              id="cpf"
+              data-testid="checkout-cep"
+              type="text"
             />
-            <label htmlFor="MasterCard">MasterCard</label>
-          </div>
-          <div>
+          </label>
+          <label data-testid="checkout-phone" htmlFor="">
+            Telefone:
             <input
               onChange={ (event) => handleChange(event) }
-              data-testid="elo-payment"
-              type="radio"
-              id="Elo"
-              value="Elo"
-              checked={ selectedOption === 'Elo' }
+              name="telefone"
+              id="telefone"
+              type="text"
             />
-            <label htmlFor="Elo">Elo</label>
-          </div>
-        </fieldset>
-        <button data-testid="checkout-btn">Finalizar Compra</button>
-      </form>
-      { validateForm && (
-        <h2>Campos inválidos</h2>
-      ) }
-    </section>
+          </label>
+          <label data-testid="checkout-cep" htmlFor="cep">
+            CEP:
+            <input
+              onChange={ (event) => handleChange(event) }
+              name="cep"
+              id="cep"
+              type="text"
+            />
+          </label>
+          <label data-testid="checkout-address" htmlFor="Endereço">
+            Endereço:
+            <input
+              onChange={ (event) => handleChange(event) }
+              name="endereço"
+              id="Endereço"
+              type="text"
+            />
+          </label>
+          <fieldset>
+            <legend>Método de pagamento:</legend>
+            <div>
+              <input
+                onChange={ (event) => handleChange(event) }
+                data-testid="ticket-payment"
+                type="radio"
+                id="Boleto"
+                value="Boleto"
+                checked={ selectedOption === 'Boleto' }
+              />
+              <label htmlFor="Boleto">Boleto</label>
+            </div>
+            <div>
+              <input
+                onChange={ (event) => handleChange(event) }
+                data-testid="visa-payment"
+                type="radio"
+                id="Visa"
+                value="Visa"
+                checked={ selectedOption === 'Visa' }
+              />
+              <label htmlFor="Visa">Visa</label>
+            </div>
+            <div>
+              <input
+                onChange={ (event) => handleChange(event) }
+                data-testid="master-payment"
+                type="radio"
+                id="MasterCard"
+                value="MasterCard"
+                checked={ selectedOption === 'MasterCard' }
+              />
+              <label htmlFor="MasterCard">MasterCard</label>
+            </div>
+            <div>
+              <input
+                onChange={ (event) => handleChange(event) }
+                data-testid="elo-payment"
+                type="radio"
+                id="Elo"
+                value="Elo"
+                checked={ selectedOption === 'Elo' }
+              />
+              <label htmlFor="Elo">Elo</label>
+            </div>
+          </fieldset>
+          <button data-testid="checkout-btn">Finalizar Compra</button>
+        </form>
+        { validateForm && (
+          <h2>Campos inválidos</h2>
+        ) }
+      </section>
+    </>
   );
 }
 

@@ -92,7 +92,7 @@ function App() {
             setCart={ setCart }
           /> }
         />
-        <Route path="/checkout" element={ <Checkout /> } />
+        <Route path="/checkout" element={ <Checkout cart={ cart } /> } />
         <Route
           path="/details/:idProduct"
           element={ <ProductDetails
