@@ -92,11 +92,17 @@ function App() {
             setCart={ setCart }
           /> }
         />
-        <Route path="/checkout" element={ <Checkout cart={ cart } /> } />
         <Route
           path="/details/:idProduct"
           element={ <ProductDetails
             products={ products }
+            cart={ cart }
+            setCart={ setCart }
+          /> }
+        />
+        <Route
+          path="/checkout"
+          element={ <Checkout
             cart={ cart }
             setCart={ setCart }
           /> }

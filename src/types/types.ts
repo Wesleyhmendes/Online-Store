@@ -22,3 +22,12 @@ export type CartType = {
   quantity: number,
   totalPrice: number,
 } & ProductType;
+
+export type KeepInfoType = {
+  name: string,
+  email: string,
+  cpf: string,
+  telefone: string,
+  cep: string,
+  address: string,
+};
