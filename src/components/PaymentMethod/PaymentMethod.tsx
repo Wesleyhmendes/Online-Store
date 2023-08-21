@@ -1,9 +1,9 @@
 type PaymentMethodProps = {
-  selectedOption: string;
   handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  payment: string;
 };
 
-function PaymentMethod({ selectedOption, handleChange }: PaymentMethodProps) {
+function PaymentMethod({ handleChange, payment }: PaymentMethodProps) {
   return (
     <fieldset>
       <legend>Método de pagamento:</legend>
@@ -14,7 +14,7 @@ function PaymentMethod({ selectedOption, handleChange }: PaymentMethodProps) {
           type="radio"
           id="Boleto"
           value="Boleto"
-          checked={ selectedOption === 'Boleto' }
+          checked={ payment === 'Boleto' }
         />
         <label htmlFor="Boleto">Boleto</label>
       </div>
@@ -25,7 +25,7 @@ function PaymentMethod({ selectedOption, handleChange }: PaymentMethodProps) {
           type="radio"
           id="Visa"
           value="Visa"
-          checked={ selectedOption === 'Visa' }
+          checked={ payment === 'Visa' }
         />
         <label htmlFor="Visa">Visa</label>
       </div>
@@ -36,7 +36,7 @@ function PaymentMethod({ selectedOption, handleChange }: PaymentMethodProps) {
           type="radio"
           id="MasterCard"
           value="MasterCard"
-          checked={ selectedOption === 'MasterCard' }
+          checked={ payment === 'MasterCard' }
         />
         <label htmlFor="MasterCard">MasterCard</label>
       </div>
@@ -47,7 +47,7 @@ function PaymentMethod({ selectedOption, handleChange }: PaymentMethodProps) {
           type="radio"
           id="Elo"
           value="Elo"
-          checked={ selectedOption === 'Elo' }
+          checked={ payment === 'Elo' }
         />
         <label htmlFor="Elo">Elo</label>
       </div>
