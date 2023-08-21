@@ -1,173 +1,147 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-// import useLocalStorage from '../../hooks/useLocalStorage';
-import { CartProps, CartType } from '../../types/types';
+import { CartType, KeepInfoType } from '../../types/types';
+import CartContainer from '../../components/CartContainer/CartContainer';
+import PaymentMethod from '../../components/PaymentMethod/PaymentMethod';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
-function Checkout({ cart, setCart }: CartProps) {
-  // const [selectedOption, setSelectedOption] = useState('');
-  const [paymentMethod, setPaymentMethod] = useState(false);
+type CheckoutProps = {
+  cart: CartType[];
+  setCart: (cart: CartType[]) => void;
+};
+
+function Checkout({ cart, setCart }: CheckoutProps) {
+  const { clearLocalStorage } = useLocalStorage();
   const [validateForm, setValidateForm] = useState(false);
-  // const { saveLocalStorage } = useLocalStorage();
-  const [keepInfo, setKeepInfo] = useState({
+  const [keepInfo, setKeepInfo] = useState<KeepInfoType>({
     name: '',
     email: '',
     cpf: '',
     telefone: '',
     cep: '',
-    endereço: '',
+    address: '',
+    payment: '',
   });
+  useEffect(() => {
+    setValidateForm(false);
+  }, []);
 
   const navigate = useNavigate();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
-    // setSelectedOption(value);
     setKeepInfo((prevInfo) => ({
       ...prevInfo,
       [name]: value,
+      payment: event.target.type === 'radio' ? value : '',
     }));
   };
 
-  const handleSelect = () => {
-    setPaymentMethod(true);
+  const handleValidate = (info: KeepInfoType) => {
+    const { name, email, cpf, telefone, cep, address, payment } = info;
+    const regexEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
+    return !!(name
+      && regexEmail.test(email)
+      && cpf
+      && telefone
+      && cep
+      && address
+      && payment
+    );
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const isValid = handleValidate(keepInfo);
 
-    if (
-      keepInfo.name
-      && keepInfo.email
-      && keepInfo.cpf
-      && keepInfo.telefone
-      && keepInfo.cep
-      && keepInfo.endereço
-      && paymentMethod
-    ) {
-      // Limpa o carrinho
-      const updatedCart: CartType[] = [];
-      setCart(updatedCart);
-      localStorage.clear();
-
-      // Leva de volta à página inicial
+    if (isValid) {
+      setValidateForm(false);
+      clearLocalStorage('cartProducts');
+      setCart([]);
       navigate('/');
+    } else {
+      setValidateForm(true);
     }
     setValidateForm(true);
   };
 
   return (
     <>
-      { cart.map((item) => (
-        <div key={ item.id }>
-          <div>
-            <img src={ item.thumbnail } alt={ item.title } />
-            <h4>{ item.title }</h4>
-            <p>{ item.price }</p>
-          </div>
-          <p>
-            { item.quantity }
-          </p>
-        </div>
-      )) }
+      <CartContainer cart={ cart } />
       <section>
         <form onSubmit={ (event) => handleSubmit(event) }>
-          <label data-testid="checkout-fullname" htmlFor="">
+          <label htmlFor="name">
             Nome completo:
             <input
+              data-testid="checkout-fullname"
               onChange={ (event) => handleChange(event) }
               name="name"
               id="name"
               type="text"
-              required
+              value={ keepInfo.name }
             />
           </label>
-          <label data-testid="checkout-email" htmlFor="">
+          <label htmlFor="email">
             E-mail:
             <input
+              data-testid="checkout-email"
               onChange={ (event) => handleChange(event) }
               name="email"
               id="email"
               type="text"
-              required
+              value={ keepInfo.email }
             />
           </label>
-          <label data-testid="checkout-cpf" htmlFor="">
+          <label htmlFor="cpf">
             CPF:
             <input
+              data-testid="checkout-cpf"
               onChange={ (event) => handleChange(event) }
               name="cpf"
               id="cpf"
               type="text"
-              required
+              value={ keepInfo.cpf }
             />
           </label>
-          <label data-testid="checkout-phone" htmlFor="">
+          <label htmlFor="telefone">
             Telefone:
             <input
+              data-testid="checkout-phone"
               onChange={ (event) => handleChange(event) }
               name="telefone"
               id="telefone"
               type="text"
-              required
+              value={ keepInfo.telefone }
             />
           </label>
-          <label data-testid="checkout-cep" htmlFor="cep">
+          <label htmlFor="cep">
             CEP:
             <input
+              data-testid="checkout-cep"
               onChange={ (event) => handleChange(event) }
               name="cep"
               id="cep"
               type="text"
-              required
+              value={ keepInfo.cep }
             />
           </label>
-          <label data-testid="checkout-address" htmlFor="Endereço">
+          <label htmlFor="address">
             Endereço:
             <input
+              data-testid="checkout-address"
               onChange={ (event) => handleChange(event) }
-              name="endereço"
-              id="Endereço"
+              name="address"
+              id="address"
               type="text"
-              required
+              value={ keepInfo.address }
             />
           </label>
-          <input
-            name="paymentMethod"
-            onChange={ handleSelect }
-            data-testid="ticket-payment"
-            type="radio"
-            id="Boleto"
-            value="Boleto"
+          <PaymentMethod
+            handleChange={ handleChange }
+            payment={ keepInfo.payment }
           />
-          <label htmlFor="Boleto">Boleto</label>
-          <input
-            name="paymentMethod"
-            onChange={ handleSelect }
-            data-testid="visa-payment"
-            type="radio"
-            id="Visa"
-            value="Visa"
-          />
-          <label htmlFor="Visa">Visa</label>
-          <input
-            name="paymentMethod"
-            onChange={ handleSelect }
-            data-testid="master-payment"
-            type="radio"
-            id="MasterCard"
-            value="MasterCard"
-          />
-          <label htmlFor="MasterCard">MasterCard</label>
-          <input
-            name="paymentMethod"
-            onChange={ handleSelect }
-            data-testid="elo-payment"
-            type="radio"
-            id="Elo"
-            value="Elo"
-          />
-          <label htmlFor="Elo">Elo</label>
           <button data-testid="checkout-btn">Finalizar Compra</button>
+
         </form>
         { validateForm && (
           <h2 data-testid="error-msg">Campos inválidos</h2>

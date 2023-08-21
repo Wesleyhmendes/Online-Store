@@ -23,24 +23,12 @@ export type CartType = {
   totalPrice: number,
 } & ProductType;
 
-export type CartProps = {
-  cart: CartType[],
-  setCart: (cart: CartType[]) => void,
-};
-
-export type ProductProps = {
-  // id: string;
-  thumbnail: string;
-  title: string;
-  price: number;
-  product: ProductType;
-  cart: CartType[];
-  setCart: (cart: CartType[]) => void;
-};
-
-export type CartButtonProps = {
-  cart: CartType[];
-  setCart: (cart: CartType[]) => void;
-  product: CartType;
-  testId:string;
+export type KeepInfoType = {
+  name: string,
+  email: string,
+  cpf: string,
+  telefone: string,
+  cep: string,
+  address: string,
+  payment: string,
 };

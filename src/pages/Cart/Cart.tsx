@@ -1,29 +1,31 @@
-// import { ChangeEvent, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useLocalStorage from '../../hooks/useLocalStorage';
-// import Button from '../../components/Button/Button';
-// import Product from '../../components/Product/Product';
-import { CartType, CartProps } from '../../types/types';
+import { CartType } from '../../types/types';
+import Button from '../../components/Button/Button';
 
+type CartProps = {
+  cart: CartType[];
+  setCart: (cart: CartType[]) => void;
+};
 function Cart({ cart, setCart }: CartProps) {
-  const { saveLocalStorage } = useLocalStorage();
+  // const { readLocalStorage } = useLocalStorage();
   // const itens: CartType[] = readLocalStorage('cartProducts');
-  const navigate = useNavigate();
-
+  const { saveLocalStorage } = useLocalStorage();
   const handleQuantityMore = (item: CartType) => {
     const updatedCart = cart.map((product) => (
       product.id === item.id
         ? {
           ...product,
-          quantity: (product as CartType).quantity + 1,
-          totalPrice: (product as CartType).totalPrice + product.price,
+          quantity: product.quantity + 1,
+          totalPrice: product.totalPrice + product.price,
         }
         : product
     ));
-    setCart(updatedCart);
+    setCart(
+      updatedCart,
+    );
     saveLocalStorage('cartProducts', updatedCart);
   };
-
   const handleQuantityLess = (item: CartType) => {
     const updatedCart = cart.map((product) => (
       product.id === item.id
@@ -39,16 +41,11 @@ function Cart({ cart, setCart }: CartProps) {
     );
     saveLocalStorage('cartProducts', updatedCart);
   };
-
   const handleRemove = (event: React.MouseEvent<HTMLButtonElement>) => {
     const { id } = event.currentTarget;
     const updatedCart = cart.filter((product) => product.id !== id);
     setCart(updatedCart);
     saveLocalStorage('cartProducts', updatedCart);
-  };
-
-  const handleSubmit = () => {
-    navigate('/checkout');
   };
   return (
     <>
@@ -71,6 +68,9 @@ function Cart({ cart, setCart }: CartProps) {
           Voltar
         </Link>
         <h2>Carrinho de Compras</h2>
+        <Link to="/checkout" data-testid="checkout-products">
+          <Button>Finalizar Compras</Button>
+        </Link>
         { cart.map((item) => (
           <div key={ item.id }>
             <button
@@ -78,7 +78,7 @@ function Cart({ cart, setCart }: CartProps) {
               data-testid="remove-product"
               onClick={ (event) => handleRemove(event) }
             >
-              ❌
+              :x_vermelho:
             </button>
             <div>
               <img src={ item.thumbnail } alt={ item.title } />
@@ -103,12 +103,6 @@ function Cart({ cart, setCart }: CartProps) {
           </div>
         )) }
       </section>
-      <button
-        data-testid="checkout-products"
-        onClick={ handleSubmit }
-      >
-        Finalizar Compra
-      </button>
     </>
   );
 }

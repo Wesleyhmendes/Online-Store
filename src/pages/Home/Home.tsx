@@ -67,13 +67,9 @@ function Home({
               data-testid="product-detail-link"
             >
               <Product
-                product={ product }
-                key={ product.id }
                 price={ product.price }
                 thumbnail={ product.thumbnail }
                 title={ product.title }
-                cart={ cart }
-                setCart={ setCart }
               />
             </Link>
             <AddToCartButton

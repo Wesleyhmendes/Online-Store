@@ -1,7 +1,11 @@
-import { ProductProps } from '../../types/types';
+type ProductProps = {
+  thumbnail: string;
+  title: string;
+  price: number;
+};
 
 function Product(
-  { thumbnail, title, price/* , product, cart,  setCart */ }: ProductProps,
+  { thumbnail, title, price }: ProductProps,
 ) {
   return (
     <div data-testid="product" className="productCard">

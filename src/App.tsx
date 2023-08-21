@@ -107,6 +107,13 @@ function App() {
             setCart={ setCart }
           /> }
         />
+        <Route
+          path="/checkout"
+          element={ <Checkout
+            cart={ cart }
+            setCart={ setCart }
+          /> }
+        />
       </Route>
     </Routes>
   );
