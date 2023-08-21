@@ -2,6 +2,7 @@ import React, { ChangeEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartType } from '../../types/types';
 import CartContainer from '../../components/CartContainer/CartContainer';
+import PaymentMethod from '../../components/PaymentMethod/PaymentMethod';
 
 type CheckoutProps = {
   cart: CartType[];
@@ -53,7 +54,7 @@ function Checkout({ cart }: CheckoutProps) {
       <CartContainer cart={ cart } />
       <section>
         <form onSubmit={ (event) => handleSubmit(event) }>
-          <label data-testid="checkout-fullname" htmlFor="">
+          <label data-testid="checkout-fullname" htmlFor="name">
             Nome completo:
             <input
               onChange={ (event) => handleChange(event) }
@@ -62,7 +63,7 @@ function Checkout({ cart }: CheckoutProps) {
               type="text"
             />
           </label>
-          <label data-testid="checkout-email" htmlFor="">
+          <label data-testid="checkout-email" htmlFor="email">
             E-mail:
             <input
               onChange={ (event) => handleChange(event) }
@@ -72,7 +73,7 @@ function Checkout({ cart }: CheckoutProps) {
               type="text"
             />
           </label>
-          <label data-testid="checkout-cpf" htmlFor="">
+          <label data-testid="checkout-cpf" htmlFor="cpf">
             CPF:
             <input
               onChange={ (event) => handleChange(event) }
@@ -82,7 +83,7 @@ function Checkout({ cart }: CheckoutProps) {
               type="text"
             />
           </label>
-          <label data-testid="checkout-phone" htmlFor="">
+          <label data-testid="checkout-phone" htmlFor="telefone">
             Telefone:
             <input
               onChange={ (event) => handleChange(event) }
@@ -100,62 +101,19 @@ function Checkout({ cart }: CheckoutProps) {
               type="text"
             />
           </label>
-          <label data-testid="checkout-address" htmlFor="Endereço">
+          <label data-testid="checkout-address" htmlFor="address">
             Endereço:
             <input
               onChange={ (event) => handleChange(event) }
-              name="endereço"
-              id="Endereço"
+              name="address"
+              id="address"
               type="text"
             />
           </label>
-          <fieldset>
-            <legend>Método de pagamento:</legend>
-            <div>
-              <input
-                onChange={ (event) => handleChange(event) }
-                data-testid="ticket-payment"
-                type="radio"
-                id="Boleto"
-                value="Boleto"
-                checked={ selectedOption === 'Boleto' }
-              />
-              <label htmlFor="Boleto">Boleto</label>
-            </div>
-            <div>
-              <input
-                onChange={ (event) => handleChange(event) }
-                data-testid="visa-payment"
-                type="radio"
-                id="Visa"
-                value="Visa"
-                checked={ selectedOption === 'Visa' }
-              />
-              <label htmlFor="Visa">Visa</label>
-            </div>
-            <div>
-              <input
-                onChange={ (event) => handleChange(event) }
-                data-testid="master-payment"
-                type="radio"
-                id="MasterCard"
-                value="MasterCard"
-                checked={ selectedOption === 'MasterCard' }
-              />
-              <label htmlFor="MasterCard">MasterCard</label>
-            </div>
-            <div>
-              <input
-                onChange={ (event) => handleChange(event) }
-                data-testid="elo-payment"
-                type="radio"
-                id="Elo"
-                value="Elo"
-                checked={ selectedOption === 'Elo' }
-              />
-              <label htmlFor="Elo">Elo</label>
-            </div>
-          </fieldset>
+          <PaymentMethod
+            selectedOption={ selectedOption }
+            handleChange={ handleChange }
+          />
           <button data-testid="checkout-btn">Finalizar Compra</button>
         </form>
         { validateForm && (
