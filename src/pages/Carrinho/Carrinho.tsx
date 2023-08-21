@@ -1,9 +1,11 @@
-import { ChangeEvent, useState } from 'react';
-import useLocalStorage from '../../hooks/useLocalStorage';
-import Button from '../../components/Button/Button';
-import Product from '../../components/Product/Product';
 import { Link } from 'react-router-dom';
+import useLocalStorage from '../../hooks/useLocalStorage';
 import { CartType } from '../../types/types';
+
+type CarrinhoProps = {
+  cart: CartType[];
+  setCart: (cart: CartType[]) => void;
+};
 
 function Carrinho({ cart, setCart }: CarrinhoProps) {
   const { readLocalStorage } = useLocalStorage();
