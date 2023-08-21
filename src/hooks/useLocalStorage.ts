@@ -1,5 +1,5 @@
 const useLocalStorage = () => {
-  const saveLocalStorage = (key: string, values: object[]) => {
+  const saveLocalStorage = (key: string, values: object[] | object) => {
     localStorage.setItem(key, JSON.stringify(values));
   };
   const readLocalStorage = (key: string) => JSON.parse(

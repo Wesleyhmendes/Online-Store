@@ -141,7 +141,6 @@ function Checkout({ cart, setCart }: CheckoutProps) {
             payment={ keepInfo.payment }
           />
           <button data-testid="checkout-btn">Finalizar Compra</button>
-
         </form>
         { validateForm && (
           <h2 data-testid="error-msg">Campos inválidos</h2>

@@ -2,6 +2,7 @@ import { useParams } from 'react-router-dom';
 import { CartType } from '../../types/types';
 import Product from '../Product/Product';
 import { AddToCartButton } from '../AddToCartButton/AddToCartButton';
+import ReviewForm from '../EvaluateForm/EvaluateForm';
 
 interface DetailsProps {
   products: CartType[];
@@ -12,6 +13,7 @@ interface DetailsProps {
 function ProductDetails({ products, cart, setCart }: DetailsProps) {
   const { idProduct } = useParams<{ idProduct: string; }>();
   // const { saveLocalStorage } = useLocalStorage();
+
   const searchedProduct = products
     .find((product) => product.id === idProduct);
 
@@ -21,16 +23,6 @@ function ProductDetails({ products, cart, setCart }: DetailsProps) {
 
   const { title, price, thumbnail } = searchedProduct;
   const modifiedThumbnail = `${thumbnail.slice(0, -5)}W${thumbnail.slice(-4)}`;
-
-  // const addToTheCart = () => {
-  //   setCart([...cart, {
-  //     ...searchedProduct,
-  //     quantity: 1,
-  //     totalPrice: price,
-  //   },
-  //   ]);
-  //   saveLocalStorage('cartProducts', cart);
-  // };
 
   return (
     <>
@@ -45,6 +37,7 @@ function ProductDetails({ products, cart, setCart }: DetailsProps) {
         product={ searchedProduct }
         testId="product-detail-add-to-cart"
       />
+      <ReviewForm />
     </>
 
   );

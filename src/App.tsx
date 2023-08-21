@@ -8,6 +8,7 @@ import { CartType, GetCategory, SelectedCategoryType } from './types/types';
 import ProductDetails from './components/Product Details/ProductDetails';
 import useLocalStorage from './hooks/useLocalStorage';
 import Checkout from './pages/Checkout/Checkout';
+import ReviewForm from './components/EvaluateForm/EvaluateForm';
 import {
   getCategories, getProductsByQuery,
   getProductsFromCategoryAndQuery,
@@ -115,6 +116,7 @@ function App() {
           /> }
         />
       </Route>
+      <Route path="/review" element={ <ReviewForm /> } />
     </Routes>
   );
 }
