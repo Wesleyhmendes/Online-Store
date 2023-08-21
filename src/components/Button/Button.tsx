@@ -7,8 +7,6 @@ type ButtonProps = {
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
 function Button({ text = '', children = '', testId = '', ...rest }: ButtonProps) {
-  console.log(testId);
-
   return (
     <button
       data-testid={ testId }

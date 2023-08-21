@@ -1,160 +1,152 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { CartType, KeepInfoType } from '../../types/types';
+import CartContainer from '../../components/CartContainer/CartContainer';
+import PaymentMethod from '../../components/PaymentMethod/PaymentMethod';
+import useLocalStorage from '../../hooks/useLocalStorage';
 
-function Checkout() {
-  const [selectedOption, setSelectedOption] = useState('');
+type CheckoutProps = {
+  cart: CartType[];
+  setCart: (cart: CartType[]) => void;
+};
+
+function Checkout({ cart, setCart }: CheckoutProps) {
+  const { clearLocalStorage } = useLocalStorage();
   const [validateForm, setValidateForm] = useState(false);
-  const [keepInfo, setKeepInfo] = useState({
+  const [keepInfo, setKeepInfo] = useState<KeepInfoType>({
     name: '',
     email: '',
     cpf: '',
     telefone: '',
     cep: '',
-    endereço: '',
+    address: '',
+    payment: '',
   });
+  useEffect(() => {
+    setValidateForm(false);
+  }, []);
 
   const navigate = useNavigate();
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value, name } = event.target;
-    setSelectedOption(value);
     setKeepInfo((prevInfo) => ({
       ...prevInfo,
       [name]: value,
+      payment: event.target.type === 'radio' ? value : '',
     }));
+  };
+
+  const handleValidate = (info: KeepInfoType) => {
+    const { name, email, cpf, telefone, cep, address, payment } = info;
+    const regexEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
+    return !!(name
+      && regexEmail.test(email)
+      && cpf
+      && telefone
+      && cep
+      && address
+      && payment
+    );
   };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const isValid = handleValidate(keepInfo);
 
-    if (
-      keepInfo.name
-      && keepInfo.email
-      && keepInfo.cpf
-      && keepInfo.telefone
-      && keepInfo.cep
-      && keepInfo.endereço
-    ) {
+    if (isValid) {
+      setValidateForm(false);
+      clearLocalStorage('cartProducts');
+      setCart([]);
       navigate('/');
-      // Remover os produtos do local Storage
     } else {
       setValidateForm(true);
     }
   };
 
   return (
-    // Adicionar as informações do produto (pelo menos o nome).
-    <section>
-      <form onSubmit={ (event) => handleSubmit(event) }>
-        <label data-testid="checkout-fullname" htmlFor="">
-          Nome completo:
-          <input
-            onChange={ (event) => handleChange(event) }
-            name="name"
-            id="name"
-            type="text"
-          />
-        </label>
-        <label data-testid="checkout-email" htmlFor="">
-          E-mail:
-          <input
-            onChange={ (event) => handleChange(event) }
-            name="email"
-            id="email"
-            data-testid="checkout-cpf"
-            type="text"
-          />
-        </label>
-        <label data-testid="checkout-cpf" htmlFor="">
-          CPF:
-          <input
-            onChange={ (event) => handleChange(event) }
-            name="cpf"
-            id="cpf"
-            data-testid="checkout-cep"
-            type="text"
-          />
-        </label>
-        <label data-testid="checkout-phone" htmlFor="">
-          Telefone:
-          <input
-            onChange={ (event) => handleChange(event) }
-            name="telefone"
-            id="telefone"
-            type="text"
-          />
-        </label>
-        <label data-testid="checkout-cep" htmlFor="cep">
-          CEP:
-          <input
-            onChange={ (event) => handleChange(event) }
-            name="cep"
-            id="cep"
-            type="text"
-          />
-        </label>
-        <label data-testid="checkout-address" htmlFor="Endereço">
-          Endereço:
-          <input
-            onChange={ (event) => handleChange(event) }
-            name="endereço"
-            id="Endereço"
-            type="text"
-          />
-        </label>
-        <fieldset>
-          <legend>Método de pagamento:</legend>
-          <div>
+    <>
+      <CartContainer cart={ cart } />
+      <section>
+        <form onSubmit={ (event) => handleSubmit(event) }>
+          <label htmlFor="name">
+            Nome completo:
             <input
+              data-testid="checkout-fullname"
               onChange={ (event) => handleChange(event) }
-              data-testid="ticket-payment"
-              type="radio"
-              id="Boleto"
-              value="Boleto"
-              checked={ selectedOption === 'Boleto' }
+              name="name"
+              id="name"
+              type="text"
+              value={ keepInfo.name }
             />
-            <label htmlFor="Boleto">Boleto</label>
-          </div>
-          <div>
+          </label>
+          <label htmlFor="email">
+            E-mail:
             <input
+              data-testid="checkout-email"
               onChange={ (event) => handleChange(event) }
-              data-testid="visa-payment"
-              type="radio"
-              id="Visa"
-              value="Visa"
-              checked={ selectedOption === 'Visa' }
+              name="email"
+              id="email"
+              type="text"
+              value={ keepInfo.email }
             />
-            <label htmlFor="Visa">Visa</label>
-          </div>
-          <div>
+          </label>
+          <label htmlFor="cpf">
+            CPF:
             <input
+              data-testid="checkout-cpf"
               onChange={ (event) => handleChange(event) }
-              data-testid="master-payment"
-              type="radio"
-              id="MasterCard"
-              value="MasterCard"
-              checked={ selectedOption === 'MasterCard' }
+              name="cpf"
+              id="cpf"
+              type="text"
+              value={ keepInfo.cpf }
             />
-            <label htmlFor="MasterCard">MasterCard</label>
-          </div>
-          <div>
+          </label>
+          <label htmlFor="telefone">
+            Telefone:
             <input
+              data-testid="checkout-phone"
               onChange={ (event) => handleChange(event) }
-              data-testid="elo-payment"
-              type="radio"
-              id="Elo"
-              value="Elo"
-              checked={ selectedOption === 'Elo' }
+              name="telefone"
+              id="telefone"
+              type="text"
+              value={ keepInfo.telefone }
             />
-            <label htmlFor="Elo">Elo</label>
-          </div>
-        </fieldset>
-        <button data-testid="checkout-btn">Finalizar Compra</button>
-      </form>
-      { validateForm && (
-        <h2>Campos inválidos</h2>
-      ) }
-    </section>
+          </label>
+          <label htmlFor="cep">
+            CEP:
+            <input
+              data-testid="checkout-cep"
+              onChange={ (event) => handleChange(event) }
+              name="cep"
+              id="cep"
+              type="text"
+              value={ keepInfo.cep }
+            />
+          </label>
+          <label htmlFor="address">
+            Endereço:
+            <input
+              data-testid="checkout-address"
+              onChange={ (event) => handleChange(event) }
+              name="address"
+              id="address"
+              type="text"
+              value={ keepInfo.address }
+            />
+          </label>
+          <PaymentMethod
+            handleChange={ handleChange }
+            payment={ keepInfo.payment }
+          />
+          <button data-testid="checkout-btn">Finalizar Compra</button>
+
+        </form>
+        { validateForm && (
+          <h2 data-testid="error-msg">Campos inválidos</h2>
+        ) }
+      </section>
+    </>
   );
 }
 
