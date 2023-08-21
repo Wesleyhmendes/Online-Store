@@ -9,18 +9,18 @@ type CarrinhoProps = {
 };
 
 function Carrinho({ cart, setCart }: CarrinhoProps) {
-  const { readLocalStorage } = useLocalStorage();
-  const itens: CartType[] = readLocalStorage('cartProducts');
-  console.log(itens);
-  console.log(cart);
+  // const { readLocalStorage } = useLocalStorage();
+  // const itens: CartType[] = readLocalStorage('cartProducts');
   const { saveLocalStorage } = useLocalStorage();
 
   const handleQuantityMore = (item: CartType) => {
     const updatedCart = cart.map((product) => (
       product.id === item.id
-        ? { ...product,
+        ? {
+          ...product,
           quantity: product.quantity + 1,
-          totalPrice: product.totalPrice + product.price }
+          totalPrice: product.totalPrice + product.price,
+        }
         : product
     ));
     setCart(
@@ -66,8 +66,8 @@ function Carrinho({ cart, setCart }: CarrinhoProps) {
             src="src/utils/goBack.png"
             alt="voltar"
             style={
-                { width: 10 }
-              }
+              { width: 10 }
+            }
           />
           Voltar
         </Link>

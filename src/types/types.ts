@@ -30,4 +30,5 @@ export type KeepInfoType = {
   telefone: string,
   cep: string,
   address: string,
+  payment: string,
 };

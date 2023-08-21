@@ -1,7 +1,7 @@
 import { BsFillCartDashFill } from 'react-icons/bs';
-import { ProductProps } from '../../types/types';
+import { CartType } from '../../types/types';
 
-function CartItem({ thumbnail, title, price }:ProductProps) {
+function CartItem({ thumbnail, title, price }:CartType) {
   return (
     <div>
       <img src={ thumbnail } alt={ title } />
