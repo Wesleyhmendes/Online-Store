@@ -10,9 +10,14 @@ const useLocalStorage = () => {
     const newData = data.filter((item: any) => item.id !== id);
     saveLocalStorage(key, newData);
   };
+  const clearLocalStorage = (key:string) => {
+    localStorage.removeItem(key);
+    localStorage.setItem(key, JSON.stringify([]));
+  };
   return {
     saveLocalStorage,
     readLocalStorage,
+    clearLocalStorage,
     deleteItemLocalStorage,
   };
 };
