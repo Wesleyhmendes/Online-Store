@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { CartType } from '../../types/types';
 import Product from '../Product/Product';
+import AddToCartButton from '../AddToCartButton/AddToCartButton';
 
 interface DetailsProps {
   products: CartType[];
@@ -32,17 +33,25 @@ function ProductDetails({ products, cart, setCart }: DetailsProps) {
   // };
 
   return (
-
-    <Product
-      product={ searchedProduct }
-      key={ id }
-      price={ price }
-      thumbnail={ modifiedThumbnail }
-      title={ title }
-      cart={ cart }
-      setCart={ setCart }
-      testId="product-detail-add-to-cart"
-    />
+    <>
+      <Product
+        product={ searchedProduct }
+        key={ id }
+        price={ price }
+        thumbnail={ modifiedThumbnail }
+        title={ title }
+        cart={ cart }
+        setCart={ setCart }
+        testId="product-detail-add-to-cart"
+        id={ id }
+      />
+      <AddToCartButton
+        cart={ cart }
+        setCart={ setCart }
+        product={ searchedProduct }
+        testId="product-detail-add-to-cart"
+      />
+    </>
 
   );
 }
