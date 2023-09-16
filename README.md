@@ -20,7 +20,7 @@ Neste projeto, nós criamos uma versão simplificada, sem persistência no banco
 
 Para garantir a qualidade do código, utilizei neste projeto os linters ESLint e StyleLint. Assim, o código se manteve alinhado com as boas práticas de desenvolvimento, além de ser mais legível e de fácil manutenção.
 
-## Requisitos ##
+## Requisitos
  - [x] Implemente o módulo de acesso à API do Mercado Livre
  - [x] Crie uma página de listagem de produtos vazia
  - [x] Crie a página do carrinho de compras
@@ -37,6 +37,7 @@ Para garantir a qualidade do código, utilizei neste projeto os linters ESLint e
  - [x] Limite a quantidade de produtos adicionados ao carrinho pela quantidade disponível em estoque
  - [x] Faça um layout para o site
  - [x] Faça um layout responsivo para o site
+
 
 Além disso, toda a aplicação foi posteriormente estilizada garantindo um layout agradável (inspirado no Spotify) e responsivo.
 
