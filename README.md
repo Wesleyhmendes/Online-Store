@@ -1,4 +1,4 @@
-# 💿 Projeto Trybe Tunes!
+# Online Store Project
 Neste projeto, nós criamos uma versão simplificada, sem persistência no banco de dados, de uma loja online, desenvolvendo em grupo as funcionalidades dela de acordo com demandas definidas em um quadro Kanban, em um cenário próximo ao do mercado de trabalho. Essa aplicação é capaz de:
 
 - Buscar produtos por termos e categorias por meio da API do Mercado Livre.
