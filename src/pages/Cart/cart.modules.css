@@ -1,0 +1,226 @@
+.cartMainSection {
+  align-items: center;
+  display: flex;
+}
+
+.cartProductSection {
+  background-color: white;
+  box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.25);
+  height: fit-content;
+  margin: 0 auto;
+  padding: 25px;
+  width: 45%;
+}
+
+.cartTitleDiv {
+  height: fit-content;
+  padding-left: 89px;
+  padding-right: 89px;
+}
+
+.cartTitle {
+  border-bottom: 1px solid #94979D;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  padding: 15px;
+  text-align: center;
+}
+
+.cartProductDiv {
+  border-bottom: 1px solid #94979D;
+  display: flex;
+  height: fit-content;
+  margin-bottom: 35px;
+  padding-bottom: 15px;
+  padding-top: 15px;
+}
+
+.removeProductDiv {
+  align-self: center;
+  margin-left: 15px;
+}
+
+.cartRemoveBtn {
+  align-self: center;
+  background-color: transparent;
+  border: none;
+  margin-right: 45px;
+}
+
+.cartRemoveSVG {
+  cursor: pointer;
+  width: 18px;
+}
+
+.cartImgNamePriceDiv {
+  display: flex;
+}
+
+.cartImg {
+  align-self: center;
+  border-radius: 2.196px;
+  width: 100px;
+  height: 100px;
+}
+
+.cartProductName {
+  align-self: center;
+  
+  color: #444955;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-left: 25px;
+  width: 440px;
+}
+
+.cartProductPrice {
+  color: #444955;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.quantityDiv {
+  align-items: center;
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+  width: 80px;
+}
+
+.cartIncreaseBtn,
+.cartDecreaseBtn {
+  align-self: center;
+  background-color: transparent;
+  border: none;
+  height: 11.29px;
+  width: 11.29px;
+}
+
+.cartProductQntd {
+  align-self: center;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+.elipse {
+  left: -7px;
+  position: absolute;
+  right: -5px;
+  top: -1.5px;
+  z-index: -1;
+}
+
+.increaseImg {
+  align-self: center;
+  cursor: pointer;
+  fill: #B0B3BB;
+  margin-left: -12px;
+  height: 11.29px;
+  transition: ease 0.2s;
+  width: 11.29px;
+}
+
+.decreaseImg {
+  align-self: center;
+  cursor: pointer;
+  fill: #B0B3BB;
+  height: 1.882px;
+  position: relative;
+  top: -4.5px;
+  width: 11.29px;
+}
+
+.cartProductPrice {
+  align-self: center;
+  color: #444955;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-left: 25px;
+}
+
+.cartFinishSection {
+  align-items: center;
+  background-color: #FFF;
+  box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  justify-content: center;
+  height: 714px;
+  margin-top: -70px;
+  width: 754px;
+}
+
+.finishSecLogo {
+  width: 130px;
+  background-color: transparent;
+}
+
+.finishTitle {
+  color: #000;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.finishPurchase {
+  align-self: self-start;
+  background-color: #31C28D;
+  border: #31C28D;
+  border-radius: 5px;
+  color: #FFF;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-left: 25px;
+  height: 38.63px;
+  text-align: center;
+  width: 244.654px;
+  transition: ease 0.2s;
+}
+
+.finishPurchase:hover {
+  background-color: #2ba97d;
+}
+
+.finishPurchase:disabled {
+  background-color: #B0B3BB;
+}
+
+.emptyCartMessage {
+  text-align: center;
+  font-weight: 450;
+}
+
+.emptyCartMessage2 {
+  color: #6B6B6B;
+  text-align: center;
+}
+
+.emptyBagImg {
+  margin-bottom: 20px;
+  width: 130px;
+}
+
+.emptyMessageImg {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}

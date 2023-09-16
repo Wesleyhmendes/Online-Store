@@ -1,4 +1,5 @@
 import { ButtonHTMLAttributes, ReactNode } from 'react';
+import { CartType } from '../../types/types';
 
 type ButtonProps = {
   text?: string;

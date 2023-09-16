@@ -1,0 +1,52 @@
+.mainHeader {
+  align-items: center;
+  background-color: #003BE5;
+  display: flex;
+  justify-content: space-around;
+  height: 90px;
+}
+
+.headerLogo {
+  width: 54.698px;
+  height: 61.871px;
+  margin-right: 10px;
+}
+
+.headerTitle {
+  display: flex;
+  color: white;
+}
+
+.cartButton {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  height: 36.769px;
+  width: 39.179px;
+}
+
+.cartQuantityDiv {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  bottom: 18px;
+  left: 25px;
+}
+
+.cartQuantity {
+  color: #FFF;
+  text-align: center;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 700;
+  bottom: 12px;
+  right: 16px;
+  line-height: normal;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.greenEllipse {
+  height: 23.694px;
+  width: 24.245px;
+}

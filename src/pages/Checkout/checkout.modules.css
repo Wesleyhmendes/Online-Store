@@ -1,0 +1,119 @@
+.checkoutMainSec {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.checkoutMainForm {
+  background-color: #FFF;
+  box-shadow: 0px 4px 15px 0px rgba(0, 0, 0, 0.25);
+  height: 614px;
+  padding-left: 56px;
+  padding-right: 56px;
+  padding-top: 26px;
+  width: 796px;
+}
+
+.clientInfoTitle {
+  color: #000;
+  font-size: 27px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.invalidAddress, .invalidReview {
+  color: red;
+}
+
+.clientAdressDiv {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 622px;
+}
+
+.clientInfoInput {
+  border: 1px solid #94979D;
+  background: #FFF;
+  color: #94979D;
+  height: 35px;
+  margin-bottom: 10px;
+}
+
+.clientInfoName {
+  width: 301px;
+  height: 35px;
+  flex-shrink: 0;
+}
+
+.clientInfoEmail {
+  width: 301px;
+  height: 35px;
+  flex-shrink: 0;
+}
+
+.clientInfoCPF {
+  width: 301px;
+  height: 35px;
+  flex-shrink: 0;
+}
+
+.clientInfoPhone {
+  width: 301px;
+  height: 35px;
+  flex-shrink: 0;
+}
+
+.clientInfoCEP {
+  width: 172px;
+  height: 35px;
+  flex-shrink: 0;
+}
+
+.clientInfoAddress {
+  width: 430px;
+  height: 35px;
+  flex-shrink: 0;
+}
+
+.clientInfoComplement {
+  width: 430px;
+}
+
+.clientInfoNumber {
+  width: 172px;
+}
+
+.clientInfoCity {
+  width: 430px;
+}
+
+.clientInfoInputState {
+  background: #FFF;
+  border: 1px solid #94979D;
+  height: 39px;
+  width: 177px;
+}
+
+.finishPurchaseDiv {
+  display: flex;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+.finishPurchase {
+  background-color: #31C28D;
+  border: #31C28D;
+  border-radius: 5px;
+  color: #FFF;
+  flex-shrink: 0;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-left: 25px;
+  height: 38.63px;
+  text-align: center;
+  width: 244.654px;
+}

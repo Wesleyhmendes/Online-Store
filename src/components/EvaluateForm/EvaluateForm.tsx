@@ -1,244 +1,129 @@
-import { useState } from 'react';
+/* eslint-disable react/jsx-max-depth */
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from 'react';
+import { Rating } from '@mui/material';
 import { useParams } from 'react-router-dom';
-import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
+import Button from '../Button/Button';
 import useLocalStorage from '../../hooks/useLocalStorage';
-import star1 from '../../assets/1-stars.png';
-import star2 from '../../assets/2-stars.png';
-import star3 from '../../assets/3-stars.png';
-import star4 from '../../assets/4-stars.png';
-import star5 from '../../assets/5-stars.png';
+import './evaluateForm.modules.css';
+import Footer from '../Footer/Footer';
 
-function ReviewForm() {
-  const { saveLocalStorage, readLocalStorage } = useLocalStorage();
+type EvaluationType = {
+  email: string;
+  text: string;
+  rating: number;
+};
+
+function EvaluateForm() {
   const { idProduct } = useParams();
+  const { saveLocalStorage, readLocalStorage } = useLocalStorage();
 
-  const [email, setEmail] = useState('');
-  const [renderError, setRenderError] = useState(false);
-  const [isThereReview, setIsThereReview] = useState(false);
-  const [starsQuantity, setStarsQuantity] = useState(1);
-  const [storage, setStorage] = useState<object[]>(
-    readLocalStorage(idProduct as string) || [],
-  );
-  const [keepReviewInfo, setKeepReviewInfo] = useState({
-    email,
-    textArea: '',
+  const storedInfo = readLocalStorage(idProduct as string);
+  const [evaluation, setEvaluation] = useState<EvaluationType>({
+    email: '',
+    text: '',
+    rating: 0,
   });
+  const [storage, setStorage] = useState<EvaluationType[]>(storedInfo || []);
+  const [isInvalid, setIsInvalid] = useState(false); // Estado para controlar a exibição da mensagem
 
-  const [checkClickStar, setCheckClickStar] = useState(false);
-  const [stars1, setStars1] = useState(false);
-  const [stars2, setStars2] = useState(false);
-  const [stars3, setStars3] = useState(false);
-  const [stars4, setStars4] = useState(false);
-  const [stars5, setStars5] = useState(false);
-
-  let selectStar;
-
-  const handleQuantity = () => {
-    switch (starsQuantity) {
-      case 1:
-        selectStar = star1;
-        return selectStar;
-        break;
-      case 2:
-        selectStar = star2;
-        return selectStar;
-        break;
-      case 3:
-        selectStar = star3;
-        return selectStar;
-        break;
-      case 4:
-        selectStar = star4;
-        return selectStar;
-        break;
-      case 5:
-        selectStar = star5;
-        return selectStar;
-        break;
-      default:
-        break;
-    }
-  };
-
-  const updateStars = (quantity: number) => {
-    setStars1(quantity >= 1);
-    setStars2(quantity >= 2);
-    setStars3(quantity >= 3);
-    setStars4(quantity >= 4);
-    setStars5(quantity === 5);
-  };
-
-  const handleStar = (event: React.MouseEvent<HTMLButtonElement>) => {
-    const { value } = event.currentTarget;
-    switch (value) {
-      case 'star1':
-        setStars1(!stars1);
-        setStarsQuantity(1);
-        setCheckClickStar(true);
-        updateStars(1);
-        break;
-      case 'star2':
-        setStars2(!stars2);
-        setStarsQuantity(2);
-        setCheckClickStar(true);
-        updateStars(2);
-        break;
-      case 'star3':
-        setStars3(!stars3);
-        setStarsQuantity(3);
-        setCheckClickStar(true);
-        updateStars(3);
-        break;
-      case 'star4':
-        setStars4(!stars4);
-        setStarsQuantity(4);
-        setCheckClickStar(true);
-        updateStars(4);
-        break;
-      case 'star5':
-        setStars5(!stars5);
-        setStarsQuantity(5);
-        setCheckClickStar(true);
-        updateStars(5);
-        break;
-      default:
-        break;
-    }
-  };
+  useEffect(() => {
+    localStorage.setItem(idProduct as string, JSON.stringify(storage));
+  }, [storage, idProduct]);
 
   const handleChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    event: ChangeEvent<HTMLInputElement
+    | HTMLTextAreaElement> | SyntheticEvent<Element, Event>,
   ) => {
-    event.preventDefault();
-    const { value, name } = event.target;
-    setKeepReviewInfo(
-      (prevInfo) => (
-        {
-          ...prevInfo,
-          [name]: value,
-        }
-      ),
-    );
-    if (name === 'email') {
-      setEmail(value);
-    }
+    const { value, name } = event.target as HTMLInputElement;
+    setEvaluation((prevInfo) => ({
+      ...prevInfo,
+      [name]: name === 'rating' ? Number(value) : value,
+    }));
   };
 
-  const handleSubmit = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    // Valide os campos e atualize o estado 'isInvalid' conforme necessário
     const regexEmail = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i;
-    if (regexEmail.test(email) && checkClickStar) {
-      setIsThereReview(true);
-      setRenderError(false);
-      saveLocalStorage((idProduct as string), keepReviewInfo);
-      setStorage([...storage, keepReviewInfo]);
-      setKeepReviewInfo({
-        email: '',
-        textArea: '',
-      });
-    } else {
-      setRenderError(true);
-    }
-  };
+    const validation1 = evaluation.rating > 0;
+    const validation2 = regexEmail.test(evaluation.email);
+    const validation3 = evaluation.text.length > 0;
+    const isValid = validation1 && validation2 && validation3;
 
+    if (!isValid) {
+      setIsInvalid(true);
+      return; // Não prossiga se os campos forem inválidos
+    }
+
+    setIsInvalid(false); // Se os campos forem válidos, limpe a mensagem de erro
+
+    setStorage([...storage, evaluation]);
+    saveLocalStorage(idProduct as string, storage);
+    setEvaluation({
+      email: '',
+      text: '',
+      rating: 0,
+    });
+  };
   return (
     <>
-      <form>
-        <legend>Avaliações</legend>
-        <label htmlFor="email">
-          Email
-          <input
-            name="email"
-            onChange={ (event) => handleChange(event) }
-            value={ keepReviewInfo.email }
-            placeholder="Email"
-            data-testid="product-detail-email"
-            type="text"
-          />
-        </label>
-        <button
-          value="star1"
-          name="rating"
-          onClick={ (event) => handleStar(event) }
-          data-testid="1-rating"
-        >
-          { stars1 ? <AiFillStar /> : <AiOutlineStar /> }
-        </button>
-        <button
-          value="star2"
-          name="rating"
-          onClick={ (event) => handleStar(event) }
-          data-testid="2-rating"
-        >
-          { stars2 ? <AiFillStar /> : <AiOutlineStar /> }
-        </button>
-
-        <button
-          value="star3"
-          name="rating"
-          onClick={ (event) => handleStar(event) }
-          data-testid="3-rating"
-        >
-          { stars3 ? <AiFillStar /> : <AiOutlineStar /> }
-        </button>
-
-        <button
-          value="star4"
-          name="rating"
-          onClick={ (event) => handleStar(event) }
-          data-testid="4-rating"
-        >
-          { stars4 ? <AiFillStar /> : <AiOutlineStar /> }
-        </button>
-
-        <button
-          value="star5"
-          name="rating"
-          onClick={ (event) => handleStar(event) }
-          data-testid="5-rating"
-        >
-          { stars5 ? <AiFillStar /> : <AiOutlineStar /> }
-        </button>
-        <label htmlFor="detailReview">
-          Avaliação
-          <textarea
-            name="textArea"
-            onChange={ (event) => handleChange(event) }
-            placeholder="Mensagem (opcional)"
-            data-testid="product-detail-evaluation"
-            value={ keepReviewInfo.textArea }
-          />
-        </label>
-        <button
-          onClick={ (event) => handleSubmit(event) }
-          data-testid="submit-review-btn"
-          type="button"
-        >
-          Avaliar
-        </button>
-      </form>
-      { renderError && (
-        <h3>Campos inválidos</h3>
-      ) }
-      { (isThereReview && !renderError) && (
-        <>
-          <h3>Avaliações:</h3>
-          <section>
-            { [storage].map((review: any, index: any) => (
-              <div key={ index }>
-                <p data-testid="review-card-email">{ review.email }</p>
-                <img
-                  data-testid="review-card-rating"
-                  src={ handleQuantity() }
-                  alt="stars"
-                />
-                <p data-testid="review-card-evaluation">{ keepReviewInfo.textArea }</p>
-              </div>
-            )) }
-          </section>
-        </>
-      ) }
+      <section className="mainReviewSection">
+        <h1 className="avaliações"> Avaliações </h1>
+        { isInvalid && <h3 className="invalidReview">Campos inválidos</h3> }
+        <form onSubmit={ (event) => handleSubmit(event) }>
+          <div className="emailNStars">
+            <label htmlFor="email">
+              <input
+                placeholder=" Email"
+                className="emailInput"
+                id="email"
+                type="text"
+                data-testid="product-detail-email"
+                name="email"
+                value={ evaluation.email }
+                onChange={ (event) => handleChange(event) }
+              />
+            </label>
+            <Rating
+              className="starsReviewInput"
+              name="rating"
+              size="large"
+              value={ evaluation.rating }
+              onChange={ (event) => handleChange(event) }
+            />
+          </div>
+          <div className="textAreaNBtn">
+            <label htmlFor="text">
+              <textarea
+                placeholder=" Comentário (opcional)"
+                className="reviewTextArea"
+                id="text"
+                data-testid="product-detail-evaluation"
+                cols={ 50 }
+                rows={ 2 }
+                name="text"
+                value={ evaluation.text }
+                onChange={ (event) => handleChange(event) }
+              />
+            </label>
+            <Button className="submitReview" testId="submit-review-btn">Avaliar</Button>
+          </div>
+        </form>
+      </section>
+      { storage.map((item, index) => (
+        <div className="userReviewsMainDiv" key={ index }>
+          <div className="reviewsStarsAndEmail">
+            <p data-testid="review-card-email" className="reviewEmail">
+              { item.email }
+            </p>
+            <Rating data-testid="review-card-rating" value={ item.rating } readOnly />
+          </div>
+          <p className="reviewUserText">{ item.text }</p>
+        </div>
+      )) }
     </>
   );
 }
-export default ReviewForm;
+
+export default EvaluateForm;

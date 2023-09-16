@@ -8,8 +8,7 @@ type CartContainerProps = {
 function CartContainer({ cart }: CartContainerProps) {
   const total = cart.reduce((acc, curr) => acc + curr.totalPrice, 0);
   return (
-    <fieldset className="cart-products-container">
-      <legend>Revise seus Produtos</legend>
+    <section className="cart-products-container">
       { cart && cart.map((product) => (
         <div key={ product.id } className="product-container">
           <Product
@@ -22,7 +21,7 @@ function CartContainer({ cart }: CartContainerProps) {
       <span>
         {`Total: R$${total.toFixed(2).replace('.', ',')}`}
       </span>
-    </fieldset>
+    </section>
   );
 }
 export default CartContainer;

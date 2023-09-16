@@ -1,0 +1,22 @@
+.addToCartButton {
+  align-self: self-start;
+  background-color: #31C28D;
+  border: #31C28D;
+  border-radius: 5px;
+  color: #FFF;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-left: 25px;
+  height: 38.63px;
+  text-align: center;
+  width: 244.654px;
+  transition: background-color 0.2s ease;
+}
+
+.addToCartButton:hover {
+  background-color: #2ba97d;
+}

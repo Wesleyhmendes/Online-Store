@@ -7,7 +7,7 @@ function CartItem({ thumbnail, title, price }:CartType) {
       <img src={ thumbnail } alt={ title } />
       <h4>{ title }</h4>
       <p>{ price }</p>
-      <button>
+      <button data-testid="shopping-cart-button">
         <BsFillCartDashFill />
       </button>
     </div>

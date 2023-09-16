@@ -1,0 +1,19 @@
+.paymentMainSection {
+  border-bottom: 1px solid #94979D;
+  margin-bottom: 55px;
+  padding-bottom: 36px;
+}
+
+.methodsDiv {
+  align-items: center;
+  display: flex;
+}
+
+.label-container {
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  gap: 9px;
+  margin-right: 39px;
+}
+

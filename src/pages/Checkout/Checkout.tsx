@@ -1,9 +1,11 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CartType, KeepInfoType } from '../../types/types';
-import CartContainer from '../../components/CartContainer/CartContainer';
 import PaymentMethod from '../../components/PaymentMethod/PaymentMethod';
 import useLocalStorage from '../../hooks/useLocalStorage';
+import CheckoutProducts from './checkoutProducts';
+import './checkout.modules.css';
+import StateSelect from './states';
 
 type CheckoutProps = {
   cart: CartType[];
@@ -20,6 +22,9 @@ function Checkout({ cart, setCart }: CheckoutProps) {
     telefone: '',
     cep: '',
     address: '',
+    complement: '',
+    number: '',
+    city: '',
     payment: '',
   });
   useEffect(() => {
@@ -38,14 +43,20 @@ function Checkout({ cart, setCart }: CheckoutProps) {
   };
 
   const handleValidate = (info: KeepInfoType) => {
-    const { name, email, cpf, telefone, cep, address, payment } = info;
+    const {
+      name, email, cpf, telefone, cep, address, payment, number, city,
+    } = info;
     const regexEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i;
-    return !!(name
+    return !!(
+      name
       && regexEmail.test(email)
       && cpf
       && telefone
       && cep
       && address
+      && payment
+      && number
+      && city
       && payment
     );
   };
@@ -66,13 +77,21 @@ function Checkout({ cart, setCart }: CheckoutProps) {
   };
 
   return (
-    <>
-      <CartContainer cart={ cart } />
-      <section>
-        <form onSubmit={ (event) => handleSubmit(event) }>
+    <section className="checkoutMainSec">
+      <CheckoutProducts cart={ cart } />
+      <form
+        className="checkoutMainForm"
+        onSubmit={ (event) => handleSubmit(event) }
+      >
+        <h2 className="clientInfoTitle">Informações do comprador</h2>
+        { validateForm && (
+          <h3 className="invalidAddress" data-testid="error-msg">Campos inválidos</h3>
+        ) }
+        <div className="clientAdressDiv">
           <label htmlFor="name">
-            Nome completo:
             <input
+              className="clientInfoInput clientInfoName"
+              placeholder=" Nome completo"
               data-testid="checkout-fullname"
               onChange={ (event) => handleChange(event) }
               name="name"
@@ -82,8 +101,9 @@ function Checkout({ cart, setCart }: CheckoutProps) {
             />
           </label>
           <label htmlFor="email">
-            E-mail:
             <input
+              className="clientInfoInput clientInfoEmail"
+              placeholder=" Email"
               data-testid="checkout-email"
               onChange={ (event) => handleChange(event) }
               name="email"
@@ -93,8 +113,9 @@ function Checkout({ cart, setCart }: CheckoutProps) {
             />
           </label>
           <label htmlFor="cpf">
-            CPF:
             <input
+              className="clientInfoInput clientInfoCPF"
+              placeholder=" CPF"
               data-testid="checkout-cpf"
               onChange={ (event) => handleChange(event) }
               name="cpf"
@@ -104,8 +125,9 @@ function Checkout({ cart, setCart }: CheckoutProps) {
             />
           </label>
           <label htmlFor="telefone">
-            Telefone:
             <input
+              className="clientInfoInput clientInfoPhone"
+              placeholder=" Telefone"
               data-testid="checkout-phone"
               onChange={ (event) => handleChange(event) }
               name="telefone"
@@ -115,8 +137,9 @@ function Checkout({ cart, setCart }: CheckoutProps) {
             />
           </label>
           <label htmlFor="cep">
-            CEP:
             <input
+              className="clientInfoInput clientInfoCEP"
+              placeholder=" CEP"
               data-testid="checkout-cep"
               onChange={ (event) => handleChange(event) }
               name="cep"
@@ -126,8 +149,9 @@ function Checkout({ cart, setCart }: CheckoutProps) {
             />
           </label>
           <label htmlFor="address">
-            Endereço:
             <input
+              className="clientInfoInput clientInfoAddress"
+              placeholder=" Endereço"
               data-testid="checkout-address"
               onChange={ (event) => handleChange(event) }
               name="address"
@@ -136,17 +160,58 @@ function Checkout({ cart, setCart }: CheckoutProps) {
               value={ keepInfo.address }
             />
           </label>
-          <PaymentMethod
-            handleChange={ handleChange }
-            payment={ keepInfo.payment }
-          />
-          <button data-testid="checkout-btn">Finalizar Compra</button>
-        </form>
-        { validateForm && (
-          <h2 data-testid="error-msg">Campos inválidos</h2>
-        ) }
-      </section>
-    </>
+          <label htmlFor="complement">
+            <input
+              className="clientInfoInput clientInfoComplement"
+              placeholder=" Complemento (opcional)"
+              data-testid="checkout-complement"
+              onChange={ (event) => handleChange(event) }
+              name="complement"
+              id="complement"
+              type="text"
+              value={ keepInfo.complement }
+            />
+          </label>
+          <label htmlFor="number">
+            <input
+              className="clientInfoInput clientInfoNumber"
+              placeholder=" Número"
+              data-testid="checkout-number"
+              onChange={ (event) => handleChange(event) }
+              name="number"
+              id="number"
+              type="text"
+              value={ keepInfo.number }
+            />
+          </label>
+          <label htmlFor="city">
+            <input
+              className="clientInfoInput clientInfoCity"
+              placeholder=" Cidade"
+              data-testid="checkout-city"
+              onChange={ (event) => handleChange(event) }
+              name="city"
+              id="city"
+              type="text"
+              value={ keepInfo.city }
+            />
+          </label>
+          <StateSelect />
+        </div>
+        <PaymentMethod
+          handleChange={ handleChange }
+          payment={ keepInfo.payment }
+        />
+        <div className="finishPurchaseDiv">
+          <button
+            className="finishPurchase"
+            data-testid="checkout-btn"
+          >
+            Finalizar Compra
+          </button>
+        </div>
+      </form>
+    </section>
   );
 }
 

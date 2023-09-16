@@ -6,7 +6,7 @@ type HeadingProps = {
 } & HTMLAttributes<HTMLHeadingElement>;
 function Heading({ children, testId = '', ...rest }: HeadingProps) {
   return (
-    <h1 data-testid={ testId } { ...rest }>
+    <h1 className="testeee" data-testid={ testId } { ...rest }>
       {children}
     </h1>
   );

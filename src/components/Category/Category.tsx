@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react';
 import { SelectedCategoryType } from '../../types/types';
 import Input from '../Input/Input';
+import './category.modules.css';
 
 type CategoryProps = {
   id: string;
@@ -16,16 +17,20 @@ function Category(
   }: CategoryProps,
 ) {
   return (
-    <Input
-      testId="category"
-      id={ `category-${id}` }
-      type="radio"
-      value={ id }
-      onChange={ (event) => handleCategory(event) }
-      checked={ selectedCategory.id === id }
-    >
-      { name }
-    </Input>
+    <div className="categoryAside">
+      <label htmlFor={ `category-${id}` } className="categoryAside">
+        <Input
+          className="categoryInputRadio"
+          testId="category"
+          id={ `category-${id}` }
+          type="radio"
+          value={ id }
+          onChange={ (event) => handleCategory(event) }
+          checked={ selectedCategory.id === id }
+        />
+        { name }
+      </label>
+    </div>
   );
 }
 export default Category;

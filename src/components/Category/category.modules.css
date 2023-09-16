@@ -1,0 +1,21 @@
+.categoryAside {
+  appearance: none;
+  color: #444955;
+  cursor: pointer;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: font-size 0.2s ease;
+}
+
+.categoryAside:hover {
+  color: #2d2f35;
+  font-size: 17px;
+}
+
+input.categoryInputRadio[type="radio"] {
+  display: none;
+} 

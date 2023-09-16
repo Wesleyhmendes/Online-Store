@@ -1,6 +1,7 @@
 import Button from '../Button/Button';
 import { CartType } from '../../types/types';
 import AddToTheCart from '../../utils/addToTheCard';
+import './addToCartButton.modules.css';
 
 type CartButtonProps = {
   cart: CartType[];
@@ -11,16 +12,10 @@ type CartButtonProps = {
 export function AddToCartButton({ cart, setCart, product, testId }: CartButtonProps) {
   const handleClick = () => {
     AddToTheCart(cart, setCart, product, 'cartProducts');
-    // setCart(
-    //   cart.map((cartItem) => (
-    //     cartItem.id === id
-    //       ? { ...cartItem, quantity: cartItem.quantity + 1 }
-    //       : cartItem
-    //   )),
-    // );
   };
   return (
     <Button
+      className="addToCartButton"
       testId={ testId }
       onClick={ () => handleClick() }
     >

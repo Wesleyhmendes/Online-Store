@@ -1,0 +1,166 @@
+.mainReviewSection {
+  align-items: center;
+  background: #FFF;
+  display: flex;
+  flex-direction: column;
+  height: 472px;
+  justify-content: center;
+  margin: 0 auto;
+  width: 80%;
+}
+
+.emailNStars {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: fit-content;
+}
+
+.emailInput {
+  background: #FFF;
+  border: 1px solid #94979D;
+  height: 35px;
+  width: 425px;
+}
+
+.starsReviewInput {
+  margin-left: 10px;
+}
+
+.avaliações {
+  font-size: 40px;
+  margin-bottom: 5px;
+}
+
+.reviewTextArea {
+  height: 152px;
+  margin-top: 20px;
+  padding-top: 10px;
+  width: 425px;
+}
+
+.submitReview {
+  align-self: center;
+  background-color: #31C28D;
+  border: #31C28D;
+  border-radius: 5px;
+  color: #FFF;
+  cursor: pointer;
+  flex-shrink: 0;
+  font-size: 23px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-left: 25px;
+  margin-top: 15px;
+  height: 50.63px;
+  text-align: center;
+  transition: background-color ease 0.2s;
+  width: 304.654px;
+}
+
+.submitReview:hover {
+  background-color: #2ba97d;
+}
+
+.textAreaNBtn {
+  display: flex;
+  flex-direction: column;
+}
+
+.userReviewsMainDiv {
+  background: #FFF;
+  height: 147px;
+  margin: 0 auto;
+  margin-top: 29px;
+  padding-top: 29px;
+  padding-bottom: 29px;
+  list-style: none;
+  width: 80%;
+}
+
+.reviewsStarsAndEmail {
+  align-items: center;
+  display: flex;
+  gap: 15px;
+}
+
+.reviewEmail {
+  color: #000;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  height: 27px;
+  line-height: normal;
+  margin-left: 53px;
+  width: fit-content;
+}
+
+.reviewUserText {
+  color: #94979D;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 53px;
+  width: 1077px;
+}
+
+/* Estilização do footer */
+.footer {
+  background-color: #003BE5;
+  color: #fff;
+  height: 100px;
+  margin-top: 90px;
+  padding: 20px 0;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Estilização do container do footer */
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.footer-logo img {
+  height: 80px;
+  width: 80px;
+}
+
+/* Estilização da lista de links */
+.footer-links ul {
+  list-style-type: none;
+  padding: 0;
+  display: flex;
+  gap: 20px;
+}
+
+/* Estilização dos elementos de lista */
+.footer-links li {
+  font-size: 22px;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+.footer-links li:hover {
+  color: #ffd700;
+}
+
+/* Estilização do rodapé inferior */
+.footer-bottom {
+  text-align: center;
+  padding: 10px 0;
+}
+
+/* Estilização do texto de direitos autorais */
+.footer-bottom p {
+  margin: 0;
+  font-size: 14px;
+}
